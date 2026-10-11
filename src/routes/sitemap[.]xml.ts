@@ -5,9 +5,11 @@ import { baseLocale, locales, localizeUrl } from '@/paraglide/runtime.js';
 
 const STATIC_PATHS = [
   '',
+  '/download',
+  '/install-guide',
+  '/photocraft-vs-photoshop',
   '/privacy-policy',
   '/terms-of-service',
-  '/acceptable-use-policy',
 ];
 
 type Entry = {

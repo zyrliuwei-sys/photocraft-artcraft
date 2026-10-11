@@ -10,8 +10,8 @@ import {
   type ErrorComponentProps,
 } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
-import dmSansLatinUrl from '@fontsource-variable/dm-sans/files/dm-sans-latin-wght-normal.woff2?url';
-import bebasLatinUrl from '@fontsource/bebas-neue/files/bebas-neue-latin-400-normal.woff2?url';
+import archivoLatinUrl from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import geistLatinUrl from '@fontsource-variable/geist/files/geist-latin-wght-normal.woff2?url';
 import { ThemeProvider } from 'next-themes';
 
 import { envConfigs } from '@/config';
@@ -73,14 +73,14 @@ export const Route = createRootRoute({
           rel: 'preload',
           as: 'font',
           type: 'font/woff2',
-          href: bebasLatinUrl,
+          href: archivoLatinUrl,
           crossOrigin: 'anonymous',
         },
         {
           rel: 'preload',
           as: 'font',
           type: 'font/woff2',
-          href: dmSansLatinUrl,
+          href: geistLatinUrl,
           crossOrigin: 'anonymous',
           // Desktop only: on slow mobile networks this 37 KB file competes
           // with the CSS and hero image; body text falls back to the system
@@ -106,6 +106,7 @@ function RootComponent() {
       <ThemeProvider
         attribute="class"
         defaultTheme="dark"
+        forcedTheme="dark"
         enableSystem={false}
         disableTransitionOnChange
       >

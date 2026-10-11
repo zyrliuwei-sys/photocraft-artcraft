@@ -6,8 +6,26 @@ import { m } from '@/paraglide/messages.js';
 const STATIC_PAGES: { path: string; title: string; description: string }[] = [
   {
     path: '',
-    title: 'Hotel Lobby AI Filter',
-    description: 'Two-person duet planning and prompt guide',
+    title: 'PhotoCraft ArtCraft: free open-source Photoshop alternative',
+    description:
+      'Overview, features, screenshots, downloads, install guide, comparison and FAQ',
+  },
+  {
+    path: '/download',
+    title: 'Download PhotoCraft',
+    description:
+      'Latest PhotoCraft builds for macOS, Windows, Linux, FreeBSD and web',
+  },
+  {
+    path: '/install-guide',
+    title: 'PhotoCraft install guide',
+    description: 'Step-by-step install for every platform plus troubleshooting',
+  },
+  {
+    path: '/photocraft-vs-photoshop',
+    title: 'PhotoCraft vs Photoshop',
+    description:
+      'Feature, price and workflow comparison with a hands-on review',
   },
   {
     path: '/privacy-policy',
@@ -18,11 +36,6 @@ const STATIC_PAGES: { path: string; title: string; description: string }[] = [
     path: '/terms-of-service',
     title: 'Terms of Service',
     description: 'Terms of use',
-  },
-  {
-    path: '/acceptable-use-policy',
-    title: 'Acceptable Use Policy',
-    description: 'Content rules, child safety and how to report violations',
   },
 ];
 

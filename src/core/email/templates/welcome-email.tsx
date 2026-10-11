@@ -7,7 +7,6 @@ import {
   Hr,
   Html,
   Img,
-  Link,
   Preview,
   Section,
   Text,
@@ -16,42 +15,34 @@ import {
 const copy = {
   en: {
     preview: (app: string) =>
-      `Your account is ready — make your first ${app} duet video`,
+      `Your ${app} account is ready. Here is how to get PhotoCraft.`,
     heading: (app: string) => `Welcome to ${app}`,
     greeting: (name?: string) => (name ? `Hi ${name},` : 'Hi there,'),
     intro:
-      'Your account is ready. Upload two photos and we turn them into the viral two-person duet in the orange recording booth — scene, moves and audio included.',
-    stepsTitle: 'How it works',
+      'Thanks for joining. PhotoCraft is the free, open-source image editor from ArtCraft, and this site helps you download it, install it and see how it compares with Photoshop.',
+    stepsTitle: 'Get started in three steps',
     steps: [
-      'Upload one clear portrait for each person.',
-      'Choose a plan to generate your scene and full duet video in the booth.',
-      'Happy with it? Animate it — your MP4 with audio is ready in about 3–5 minutes.',
+      'Download the build for your Mac, Windows or Linux machine.',
+      'Follow the install guide, about two minutes on any system.',
+      'Open a PSD and start editing with the tools you already know.',
     ],
-    credits: (n: number) =>
-      `We've added ${n.toLocaleString('en-US')} free credits to your account to get you started.`,
-    refund: 'If a generation fails, your credits are refunded automatically.',
-    cta: 'Make your first duet',
-    videos: 'Your finished videos are always saved in My videos.',
+    cta: 'Download PhotoCraft',
     footer: (app: string) =>
       `You're receiving this email because you created an account on ${app}.`,
   },
   zh: {
-    preview: (app: string) => `账号已就绪，来做你的第一个 ${app} 对唱视频`,
+    preview: (app: string) => `你的 ${app} 账号已就绪，来获取 PhotoCraft 吧`,
     heading: (app: string) => `欢迎来到 ${app}`,
     greeting: (name?: string) => (name ? `${name}，你好：` : '你好：'),
     intro:
-      '你的账号已经准备好了。上传两张照片，我们就能为你生成暖橙色录音棚里的双人对唱视频：场景、动作和声音一步到位。',
-    stepsTitle: '三步出片',
+      '感谢注册。PhotoCraft 是 ArtCraft 推出的免费开源图像编辑器，本站帮你下载、安装它，并了解它与 Photoshop 的区别。',
+    stepsTitle: '三步开始',
     steps: [
-      '为两个人各上传一张清晰的正脸照。',
-      '选择套餐，生成你们在录音棚里的场景和完整对唱视频。',
-      '满意就点生成视频，约 3–5 分钟拿到带音频的 MP4。',
+      '下载适合你 Mac、Windows 或 Linux 电脑的版本。',
+      '按照安装指南操作，任何系统都只需两分钟左右。',
+      '打开一个 PSD，用你熟悉的工具开始编辑。',
     ],
-    credits: (n: number) =>
-      `我们已向你的账号赠送 ${n.toLocaleString('en-US')} 积分，可以直接开始。`,
-    refund: '生成失败会自动退还积分。',
-    cta: '做第一个对唱视频',
-    videos: '生成好的视频都会保存在「我的视频」里。',
+    cta: '下载 PhotoCraft',
     footer: (app: string) => `你收到这封邮件，是因为你在 ${app} 注册了账号。`,
   },
 };
@@ -60,19 +51,15 @@ export function WelcomeEmail({
   appName = 'our app',
   logoUrl,
   url,
-  videosUrl,
   name,
-  credits,
   locale = 'en',
 }: {
   appName?: string;
   logoUrl?: string;
-  /** Where the main button goes (the create section). */
+  /** Where the main button goes (the download page). */
   url: string;
-  /** "My videos" page; the line is omitted when not given. */
-  videosUrl?: string;
   name?: string;
-  /** Signup credits granted, if any — omitted from the copy when 0. */
+  /** Kept for API compatibility with the auth hook; not shown. */
   credits?: number;
   locale?: string;
 }) {
@@ -115,27 +102,6 @@ export function WelcomeEmail({
               </Button>
             </Section>
 
-            <Section style={styles.perks}>
-              {credits && credits > 0 ? (
-                <Text style={styles.perk}>
-                  {'🎁\u00a0\u00a0'}
-                  {t.credits(credits)}
-                </Text>
-              ) : null}
-              <Text style={styles.perk}>
-                {'↩️\u00a0\u00a0'}
-                {t.refund}
-              </Text>
-            </Section>
-
-            {videosUrl ? (
-              <Text style={styles.small}>
-                <Link href={videosUrl} style={styles.link}>
-                  {t.videos}
-                </Link>
-              </Text>
-            ) : null}
-
             <Hr style={styles.hr} />
 
             <Text style={styles.footer}>{t.footer(appName)}</Text>
@@ -172,7 +138,8 @@ const styles: Record<string, React.CSSProperties> = {
     height: 6,
     borderRadius: 999,
     marginBottom: 18,
-    background: 'linear-gradient(90deg, #f97316 0%, #fb923c 55%, #fdba74 100%)',
+    background:
+      'linear-gradient(90deg, #00a3e0 0 12.5%, #d6007e 12.5% 25%, #ffd400 25% 37.5%, #26272b 37.5% 50%, #e0412f 50% 62.5%, #2fa84f 62.5% 75%, #2459d6 75% 87.5%, #777779 87.5% 100%)',
   },
   brandRow: {
     display: 'flex',
@@ -211,7 +178,7 @@ const styles: Record<string, React.CSSProperties> = {
     margin: '20px 0 14px',
   },
   button: {
-    backgroundColor: '#ea580c',
+    backgroundColor: '#d63a28',
     borderRadius: 12,
     color: '#ffffff',
     fontSize: 14,
@@ -241,35 +208,12 @@ const styles: Record<string, React.CSSProperties> = {
     height: 22,
     marginRight: 10,
     borderRadius: 999,
-    backgroundColor: '#f97316',
+    backgroundColor: '#d63a28',
     color: '#ffffff',
     fontSize: 12,
     fontWeight: 700,
     lineHeight: '22px',
     textAlign: 'center',
-  },
-  perks: {
-    backgroundColor: '#fff7ed',
-    borderRadius: 12,
-    padding: '12px 16px',
-    margin: '6px 0 14px',
-  },
-  perk: {
-    margin: '4px 0',
-    fontSize: 13,
-    lineHeight: '20px',
-    color: '#7c2d12',
-  },
-  small: {
-    margin: '0 0 6px',
-    fontSize: 12,
-    lineHeight: '18px',
-    color: '#64748b',
-    textAlign: 'center',
-  },
-  link: {
-    color: '#ea580c',
-    textDecoration: 'underline',
   },
   hr: {
     borderColor: 'rgba(15, 23, 42, 0.08)',

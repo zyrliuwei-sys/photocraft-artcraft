@@ -41,4 +41,4 @@ key 保存在数据库的 `config` 表里（`indexnow_key`），不需要改环�
 
 ## 更新安装包（维护用）
 
-`sync.mjs` 只在 hotel lobby 项目里使用：改了 IndexNow 相关代码后运行 `node tools/indexnow-installer/sync.mjs`，把最新代码同步进安装包，然后重新打包。
+`sync.mjs` 只在维护安装包的源项目里使用：改了 IndexNow 相关代码后运行 `node tools/indexnow-installer/sync.mjs`，把最新代码同步进安装包，然后重新打包。

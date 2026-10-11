@@ -184,13 +184,6 @@ export function getSettingGroups(): SettingGroup[] {
       description: 'Evolink AI API (image, video, chat)',
       tab: 'ai',
     },
-    {
-      name: 'hotel_lobby',
-      title: 'Hotel Lobby duet',
-      description:
-        'Two photos → GPT Image 2 scene → DreamActor motion transfer (uses the Fal key)',
-      tab: 'ai',
-    },
 
     // Analytics
     {
@@ -916,72 +909,6 @@ export function getSettings(): Setting[] {
       type: 'password',
       placeholder: 'xxx',
       group: 'fal',
-      tab: 'ai',
-    },
-
-    // ─── AI / Hotel Lobby duet ───────────────────────────────────────
-    {
-      name: 'prompt_screening_enabled',
-      title: 'Prompt screening (Waffo)',
-      type: 'switch',
-      tip: 'Scan styling notes with the Waffo content-safety API before generation. Uses the Waffo Merchant ID and private key from the Payment tab; skipped while those are empty.',
-      group: 'hotel_lobby',
-      tab: 'ai',
-      defaultValue: 'true',
-    },
-    {
-      name: 'hotel_lobby_motion_video_url',
-      title: '8-second reference video URL',
-      type: 'text',
-      placeholder:
-        'Leave empty = /videos/hotel-lobby-reference.mp4 (shipped with the site; MP4, ≤30s, 9:16)',
-      group: 'hotel_lobby',
-      tab: 'ai',
-    },
-    {
-      name: 'hotel_lobby_motion_video_url_15',
-      title: '15-second reference video URL',
-      type: 'text',
-      placeholder:
-        'Leave empty = /videos/hotel-lobby-verse15.mp4 (the COLORS verse shipped with the site)',
-      group: 'hotel_lobby',
-      tab: 'ai',
-    },
-    {
-      name: 'hotel_lobby_credits_15',
-      title: 'Credits per 15-second video (override)',
-      type: 'number',
-      placeholder: 'Leave empty = auto (680: 7× fal cost, 1 credit = $0.01)',
-      group: 'hotel_lobby',
-      tab: 'ai',
-    },
-    {
-      name: 'hotel_lobby_video_seconds',
-      title: 'Reference video length (seconds)',
-      type: 'number',
-      placeholder:
-        '8 (default; set the real length if you change the video — prices each video at 7× fal cost)',
-      group: 'hotel_lobby',
-      tab: 'ai',
-    },
-    {
-      name: 'hotel_lobby_credits',
-      title: 'Credits per video (override)',
-      type: 'number',
-      placeholder: 'Leave empty = auto (7× fal cost, 1 credit = $0.01)',
-      group: 'hotel_lobby',
-      tab: 'ai',
-    },
-    {
-      name: 'hotel_lobby_scene_quality',
-      title: 'Video frame quality',
-      type: 'select',
-      options: [
-        { label: 'Medium (default, ~38 s, ~$0.05)', value: 'medium' },
-        { label: 'High (~65–90 s, ~$0.13)', value: 'high' },
-      ],
-      tip: 'Quality of the still each video is animated from. Medium looks the same at video size and is ~45 s faster.',
-      group: 'hotel_lobby',
       tab: 'ai',
     },
 

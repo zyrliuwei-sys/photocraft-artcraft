@@ -8,9 +8,7 @@ import { Link } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
 import { cn } from '@/lib/utils';
 import { m } from '@/paraglide/messages.js';
-import { LocaleSelector } from '@/components/locale-selector';
 import { SiteUserMenu } from '@/components/site-user-menu';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { buttonVariants } from '@/components/ui/button';
 
 export interface NavLink {
@@ -26,9 +24,12 @@ const isExternalHref = (href: string) => /^https?:\/\//.test(href);
 export function SiteHeader({
   navLinks,
   logoAlt,
+  cta,
 }: {
   navLinks?: NavLink[];
   logoAlt: string;
+  /** Replaces the default "Get started" button for signed-out visitors. */
+  cta?: { href: string; label: string };
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session } = useSession();
@@ -36,7 +37,7 @@ export function SiteHeader({
 
   return (
     <header className="bg-background/95 border-border sticky top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6">
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-2.5">
           <img
@@ -44,15 +45,15 @@ export function SiteHeader({
             alt={logoAlt}
             width={512}
             height={512}
-            className="size-8 rounded-full"
+            className="size-8 rounded-md"
           />
-          <span className="text-base font-bold tracking-tight">
+          <span className="font-display text-[15px] font-bold">
             {envConfigs.app_name}
           </span>
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="hidden items-center gap-7 lg:flex">
           {navLinks?.map((link) =>
             isExternalHref(link.href) ? (
               <a
@@ -78,9 +79,7 @@ export function SiteHeader({
         </nav>
 
         {/* Desktop actions */}
-        <div className="hidden items-center gap-3 md:flex">
-          <LocaleSelector />
-          <ThemeToggle />
+        <div className="hidden items-center gap-3 lg:flex">
           {user ? (
             <SiteUserMenu
               name={user.name || 'User'}
@@ -88,8 +87,11 @@ export function SiteHeader({
               image={user.image}
             />
           ) : (
-            <Link href="/settings" className={cn(buttonVariants(), 'gap-1.5')}>
-              {m['common.nav.get_started']()}
+            <Link
+              href={cta?.href ?? '/settings'}
+              className={cn(buttonVariants(), 'gap-1.5')}
+            >
+              {cta?.label ?? m['common.nav.get_started']()}
               <ArrowRight className="size-4" />
             </Link>
           )}
@@ -97,7 +99,7 @@ export function SiteHeader({
 
         {/* Mobile toggle */}
         <button
-          className="p-2 md:hidden"
+          className="p-2 lg:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={mobileOpen}
@@ -108,7 +110,7 @@ export function SiteHeader({
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-border border-t px-4 pt-2 pb-4 md:hidden">
+        <div className="border-border border-t px-4 pt-2 pb-4 lg:hidden">
           <nav className="flex flex-col gap-2">
             {navLinks?.map((link) =>
               isExternalHref(link.href) ? (
@@ -136,8 +138,6 @@ export function SiteHeader({
             )}
           </nav>
           <div className="border-border mt-3 flex items-center gap-2 border-t pt-3">
-            <LocaleSelector />
-            <ThemeToggle />
             <div className="flex-1" />
             {user ? (
               <SiteUserMenu
@@ -147,11 +147,11 @@ export function SiteHeader({
               />
             ) : (
               <Link
-                href="/settings"
+                href={cta?.href ?? '/settings'}
                 className={cn(buttonVariants(), 'gap-1.5')}
                 onClick={() => setMobileOpen(false)}
               >
-                {m['common.nav.get_started']()}
+                {cta?.label ?? m['common.nav.get_started']()}
               </Link>
             )}
           </div>

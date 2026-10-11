@@ -8,7 +8,7 @@
  * To change pricing, edit this file and redeploy. Admin UI cannot alter prices.
  */
 
-import { PaymentInterval, PaymentType } from '@/core/payment/types';
+import type { PaymentInterval, PaymentType } from '@/core/payment/types';
 
 export type PricingPlanInfo = {
   name: string;
@@ -30,106 +30,11 @@ export type PricingProduct = {
 };
 
 /**
- * Hotel Lobby AI catalog. A duet video costs a fixed number of credits
- * (see ./hotel-lobby-pricing.ts — 440 at the default 8s reference video), and
- * every pack holds a whole number of videos.
- *
- * Pricing floor: no product may sell credits below $0.01 each, so every
- * video is sold at ≥ 7× its fal cost. That is why there are no discounted
- * yearly plans — check priceInCents / credits ≥ 0.01 before adding a product.
- * Keys MUST match what the pricing UI sends as product_id.
+ * Product catalog. Empty: PhotoCraft ArtCraft AI is a free guide site with
+ * nothing for sale, so checkout rejects every product_id. Add entries here
+ * (keys = product_id sent by the pricing UI) if paid products are introduced.
  */
-export const pricingCatalog: Record<string, PricingProduct> = {
-  pack_single: {
-    productId: 'pack_single',
-    productName: 'Single Video',
-    planName: 'Single Video',
-    description: 'Single Video',
-    type: PaymentType.ONE_TIME,
-    // $4.90 for one 8 s video (440 credits = duetCredits(8)). Added
-    // 2026-10-04 after no paid orders the day the floor moved to $9.90.
-    priceInCents: 490,
-    currency: 'usd',
-    credits: 440,
-  },
-  pack_starter: {
-    productId: 'pack_starter',
-    productName: 'Starter Pack',
-    planName: 'Starter Pack',
-    description: 'Starter Pack',
-    type: PaymentType.ONE_TIME,
-    // $9.90 for two 8 s videos (≈ 7× fal cost after PayPal fees); was
-    // $5 / 440 until 2026-10-03 — compare paid starter orders per day.
-    priceInCents: 990,
-    currency: 'usd',
-    credits: 880,
-  },
-  pack_standard: {
-    productId: 'pack_standard',
-    productName: 'Standard Pack',
-    planName: 'Standard Pack',
-    description: 'Standard Pack',
-    type: PaymentType.ONE_TIME,
-    priceInCents: 2300,
-    currency: 'usd',
-    credits: 2200,
-  },
-  pack_pro: {
-    productId: 'pack_pro',
-    productName: 'Pro Pack',
-    planName: 'Pro Pack',
-    description: 'Pro Pack',
-    type: PaymentType.ONE_TIME,
-    priceInCents: 4400,
-    currency: 'usd',
-    credits: 4400,
-  },
-  basic_monthly: {
-    productId: 'basic_monthly',
-    productName: 'Basic',
-    planName: 'Basic Monthly',
-    description: 'Basic Monthly',
-    type: PaymentType.SUBSCRIPTION,
-    priceInCents: 2300,
-    currency: 'usd',
-    credits: 2200,
-    plan: {
-      name: 'Basic',
-      interval: PaymentInterval.MONTH,
-      intervalCount: 1,
-    },
-  },
-  pro_monthly: {
-    productId: 'pro_monthly',
-    productName: 'Pro',
-    planName: 'Pro Monthly',
-    description: 'Pro Monthly',
-    type: PaymentType.SUBSCRIPTION,
-    priceInCents: 4400,
-    currency: 'usd',
-    credits: 4400,
-    plan: {
-      name: 'Pro',
-      interval: PaymentInterval.MONTH,
-      intervalCount: 1,
-    },
-  },
-  studio_monthly: {
-    productId: 'studio_monthly',
-    productName: 'Studio',
-    planName: 'Studio Monthly',
-    description: 'Studio Monthly',
-    type: PaymentType.SUBSCRIPTION,
-    priceInCents: 8800,
-    currency: 'usd',
-    credits: 8800,
-    plan: {
-      name: 'Studio',
-      interval: PaymentInterval.MONTH,
-      intervalCount: 1,
-    },
-  },
-};
+export const pricingCatalog: Record<string, PricingProduct> = {};
 
 export function getPricingProduct(productId: string): PricingProduct | null {
   if (!productId) return null;
