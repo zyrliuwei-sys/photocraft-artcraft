@@ -1,4 +1,4 @@
-import { Download } from 'lucide-react';
+import { ArrowRight, Download } from 'lucide-react';
 
 import { Link } from '@/core/i18n/navigation';
 import {
@@ -32,14 +32,19 @@ export function PhotoCraftHero() {
           <p className="text-muted-foreground mt-7 max-w-[34rem] text-lg leading-relaxed text-pretty">
             {m['pc.hero.sub']()}
           </p>
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            {/* Static WebAssembly build in public/editor — a plain anchor, not a router route. */}
+            <a href="/editor/" className={btnPrimary}>
+              {m['pc.hero.cta_editor']()}
+              <ArrowRight className="size-[18px]" />
+            </a>
             {target ? (
-              <a href={target.primary.href} className={btnPrimary}>
+              <a href={target.primary.href} className={btnSecondary}>
                 <Download className="size-[18px]" />
                 {m['pc.hero.cta_download']()}
               </a>
             ) : (
-              <Link href="/download" className={btnPrimary}>
+              <Link href="/download" className={btnSecondary}>
                 <Download className="size-[18px]" />
                 {m['pc.hero.cta_download']()}
               </Link>

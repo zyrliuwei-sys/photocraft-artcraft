@@ -876,6 +876,7 @@
   "pc.hero.title_a": "PhotoCraft ArtCraft",
   "pc.hero.title_b": "开源的 Photoshop 替代品",
   "pc.hero.sub": "原生 Rust 图像编辑器，支持图层、蒙版和真正的 PSD 文件。Mac、Windows、Linux 全平台免费，无需订阅。",
+  "pc.hero.cta_editor": "免费在线编辑",
   "pc.hero.cta_download": "下载 PhotoCraft",
   "pc.hero.cta_source": "查看源码",
   "pc.hero.shot_alt": "PhotoCraft ArtCraft 正在编辑《神奈川冲浪里》，使用了曲线、自然饱和度和图层样式",

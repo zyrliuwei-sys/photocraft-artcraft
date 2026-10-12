@@ -876,6 +876,7 @@
   "pc.hero.title_a": "PhotoCraft ArtCraft.",
   "pc.hero.title_b": "The open-source Photoshop alternative.",
   "pc.hero.sub": "A native Rust image editor with layers, masks and real PSD support. Free on Mac, Windows and Linux, with no subscription.",
+  "pc.hero.cta_editor": "Start editing, it's free",
   "pc.hero.cta_download": "Download PhotoCraft",
   "pc.hero.cta_source": "View source",
   "pc.hero.shot_alt": "PhotoCraft ArtCraft editing The Great Wave with curves, vibrance and a layer style",
