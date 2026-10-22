@@ -9,17 +9,20 @@ export function photocraftHead({
   locale,
   title,
   description,
+  image: imagePath = OG_IMAGE,
   jsonLd = [],
 }: {
   path: string;
   locale: Locale;
   title: string;
   description: string;
+  /** Social preview image path; defaults to the PhotoCraft demo shot. */
+  image?: string;
   jsonLd?: object[];
 }) {
   const urlFor = (loc: string) =>
     localizeUrl(`${envConfigs.app_url}${path}`, { locale: loc as Locale }).href;
-  const image = `${envConfigs.app_url}${OG_IMAGE}`;
+  const image = `${envConfigs.app_url}${imagePath}`;
   return {
     meta: [
       { title },

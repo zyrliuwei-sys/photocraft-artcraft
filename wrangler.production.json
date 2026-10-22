@@ -19,5 +19,8 @@
       "migrations_dir": "drizzle"
     }
   ],
-  "routes": [{ "pattern": "photocraftartcraft.com", "custom_domain": true }]
+  "routes": [
+    { "pattern": "photocraftartcraft.com", "custom_domain": true },
+    { "pattern": "www.photocraftartcraft.com", "custom_domain": true }
+  ]
 }

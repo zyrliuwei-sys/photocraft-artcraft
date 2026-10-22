@@ -17,7 +17,7 @@ import { Section, SectionHeading } from '@/components/editorial-section';
 
 import { btnPrimary, btnSecondary, FILE_TEXT, PLATFORM_META } from './shared';
 
-function FileRow({ file }: { file: DownloadFile }) {
+export function FileRow({ file }: { file: DownloadFile }) {
   const text = FILE_TEXT[file.key];
   return (
     <a

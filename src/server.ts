@@ -24,20 +24,40 @@ function ensureCloudflareEnv(): Promise<void> {
   return cfEnvPromise;
 }
 
-// Edge cache for the homepage HTML (Cloudflare Workers Cache API). The
-// rendered homepage is identical for every visitor (session, credits and the
-// user menu load client-side), so a 5-minute shared copy cuts TTFB without
+// Edge cache for the public marketing + blog HTML (Cloudflare Workers Cache
+// API). These pages render identically for every visitor (session, credits
+// and the user menu load client-side), so a shared copy cuts TTFB without
 // changing what anyone sees. Keyed by build id so a deploy never serves HTML
 // that points at the previous build's assets. Query strings (utm_*, …) and
-// other paths always render fresh; admin settings show up within 5 minutes.
+// other paths always render fresh; admin settings and new database posts
+// show up within HTML_CACHE_SECONDS.
 declare const __BUILD_ID__: string;
-const HTML_CACHE_PATHS = new Set(['/', '/zh', '/zh/']);
-const HTML_CACHE_SECONDS = 300;
+const HTML_CACHE_PATHS = new Set([
+  '/',
+  '/download',
+  '/install-guide',
+  '/photocraft-vs-photoshop',
+  '/vectorcraft',
+  '/vectorcraft/online',
+  '/vectorcraft-vs-illustrator',
+  '/privacy-policy',
+  '/terms-of-service',
+  '/blog',
+]);
+const HTML_CACHE_SECONDS = 1800;
+
+function isCacheablePath(pathname: string): boolean {
+  const path = (pathname.replace(/^\/zh(?=\/|$)/, '') || '/').replace(
+    /(.)\/$/,
+    '$1'
+  );
+  return HTML_CACHE_PATHS.has(path) || /^\/blog\/[\w-]+$/.test(path);
+}
 
 function htmlEdgeCache(req: Request): Cache | undefined {
   if (req.method !== 'GET') return undefined;
   const url = new URL(req.url);
-  if (url.search || !HTML_CACHE_PATHS.has(url.pathname)) return undefined;
+  if (url.search || !isCacheablePath(url.pathname)) return undefined;
   return (globalThis as { caches?: { default?: Cache } }).caches?.default;
 }
 
@@ -71,6 +91,12 @@ async function renderWithEdgeCache(req: Request): Promise<Response> {
 // getLocale() resolves per-request (AsyncLocalStorage) during SSR.
 export default {
   async fetch(req: Request): Promise<Response> {
+    // Canonical host: www.<domain> → <domain>, keeping path and query.
+    const reqUrl = new URL(req.url);
+    if (reqUrl.hostname.startsWith('www.')) {
+      reqUrl.hostname = reqUrl.hostname.slice(4);
+      return Response.redirect(reqUrl.toString(), 301);
+    }
     await ensureCloudflareEnv();
     const response = await renderWithEdgeCache(req);
     response.headers.set('X-Content-Type-Options', 'nosniff');

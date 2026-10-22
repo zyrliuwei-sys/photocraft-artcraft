@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ArrowRight, Menu, X } from 'lucide-react';
+import { ArrowRight, Languages, Menu, X } from 'lucide-react';
 
 import { useSession } from '@/core/auth/client';
 import { Link } from '@/core/i18n/navigation';
@@ -25,11 +25,14 @@ export function SiteHeader({
   navLinks,
   logoAlt,
   cta,
+  localeToggle,
 }: {
   navLinks?: NavLink[];
   logoAlt: string;
   /** Replaces the default "Get started" button for signed-out visitors. */
   cta?: { href: string; label: string };
+  /** A button that switches to the other language, labelled in that language. */
+  localeToggle?: { label: string; hrefLang: string; onSelect: () => void };
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { data: session } = useSession();
@@ -80,6 +83,17 @@ export function SiteHeader({
 
         {/* Desktop actions */}
         <div className="hidden items-center gap-3 lg:flex">
+          {localeToggle && (
+            <button
+              type="button"
+              lang={localeToggle.hrefLang}
+              onClick={localeToggle.onSelect}
+              className="text-muted-foreground hover:text-foreground inline-flex cursor-pointer items-center gap-1.5 text-sm transition-colors"
+            >
+              <Languages className="size-4" />
+              {localeToggle.label}
+            </button>
+          )}
           {user ? (
             <SiteUserMenu
               name={user.name || 'User'}
@@ -138,6 +152,17 @@ export function SiteHeader({
             )}
           </nav>
           <div className="border-border mt-3 flex items-center gap-2 border-t pt-3">
+            {localeToggle && (
+              <button
+                type="button"
+                lang={localeToggle.hrefLang}
+                onClick={localeToggle.onSelect}
+                className="text-muted-foreground hover:bg-accent hover:text-foreground inline-flex cursor-pointer items-center gap-1.5 rounded-md px-3 py-2 text-sm"
+              >
+                <Languages className="size-4" />
+                {localeToggle.label}
+              </button>
+            )}
             <div className="flex-1" />
             {user ? (
               <SiteUserMenu

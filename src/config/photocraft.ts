@@ -4,8 +4,8 @@
  * (https://github.com/storytold/photocraft/releases).
  */
 
-export const PHOTOCRAFT_VERSION = '0.7.0';
-export const LAUNCHER_VERSION = '0.2.0';
+export const PHOTOCRAFT_VERSION = '0.12.0';
+export const LAUNCHER_VERSION = '0.6.1';
 
 export const PHOTOCRAFT_LINKS = {
   repo: 'https://github.com/storytold/photocraft',

@@ -7,8 +7,8 @@
   <meta name="description" content="Free online photo and PSD editor with layers, masks and adjustment layers. Runs in your browser, nothing uploaded.">
   
 <script type="module">
-import init, * as bindings from './photocraft-web-effbf20fc7ec283d.js';
-const wasm = await init({ module_or_path: './photocraft-web-effbf20fc7ec283d_bg.wasm' });
+import init, * as bindings from './photocraft-web-boot-35697f51dbdd0a9.js';
+const wasm = await init({ module_or_path: './photocraft-web-boot-35697f51dbdd0a9_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -29,7 +29,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
     #photocraft_stalled { color: #8c8c8c; visibility: hidden; animation: photocraft-stalled 0s 20s forwards; }
     @keyframes photocraft-stalled { to { visibility: visible; } }
   </style>
-<link rel="modulepreload" href="./photocraft-web-effbf20fc7ec283d.js" crossorigin="anonymous" integrity="sha384-4YoqfWmAemp2mvF2Sir5lU27YF7ZUJcoZDXdo5CsaSGUPjtR1D0/gqq+4L5qNToX"><link rel="preload" href="./photocraft-web-effbf20fc7ec283d_bg.wasm" crossorigin="anonymous" integrity="sha384-YPfod8VZEQ8u4yYSq+OnHV8+eb/aqO81PFawSoHGzCnj2wXCB+pIuxPrH9qzBPP5" as="fetch" type="application/wasm"></head>
+<link rel="modulepreload" href="./photocraft-web-boot-35697f51dbdd0a9.js" crossorigin="anonymous" integrity="sha384-fLY8fVcBn7QO+toAJxOgBCtEKG0tWF14GSoQejpUBIpvd59IfojsxuT5MVV+XOmn"><link rel="preload" href="./photocraft-web-boot-35697f51dbdd0a9_bg.wasm" crossorigin="anonymous" integrity="sha384-qpPkRe28di4yfv1wqKtkzi+b6AYo01S73l01JztM84+44Cr3o7Enxx3n6eSkrJp6" as="fetch" type="application/wasm"></head>
 <body>
   <canvas id="photocraft_canvas"></canvas>
   <div id="photocraft_loading">

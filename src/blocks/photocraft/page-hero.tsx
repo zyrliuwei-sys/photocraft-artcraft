@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { ChevronRight } from 'lucide-react';
 
 import { Link } from '@/core/i18n/navigation';
@@ -8,16 +9,25 @@ import { ShotFrame } from '@/components/editorial-section';
 /** Inner-page opener: breadcrumb, H1, keyword-rich lede, one product frame. */
 export function PageHero({
   crumb,
+  parent,
   title,
   lede,
   shot,
+  shotSrc: src = shotSrc,
   shotAlt,
+  children,
 }: {
   crumb: string;
+  /** Optional middle breadcrumb (e.g. VectorCraft › Online). */
+  parent?: { href: string; label: string };
   title: string;
   lede: string;
   shot: string;
+  /** Screenshot URL builder; defaults to the PhotoCraft set. */
+  shotSrc?: (name: string, w: 800 | 1600) => string;
   shotAlt: string;
+  /** Extra content under the lede (e.g. call-to-action buttons). */
+  children?: ReactNode;
 }) {
   return (
     <section className="border-border border-b">
@@ -33,6 +43,18 @@ export function PageHero({
               <li aria-hidden>
                 <ChevronRight className="size-3.5" />
               </li>
+              {parent && (
+                <>
+                  <li>
+                    <Link href={parent.href} className="hover:text-foreground">
+                      {parent.label}
+                    </Link>
+                  </li>
+                  <li aria-hidden>
+                    <ChevronRight className="size-3.5" />
+                  </li>
+                </>
+              )}
               <li className="text-foreground" aria-current="page">
                 {crumb}
               </li>
@@ -44,11 +66,12 @@ export function PageHero({
           <p className="text-foreground/80 mt-7 max-w-[64ch] text-[1.075rem] leading-[1.75]">
             {lede}
           </p>
+          {children}
         </div>
         <div className="animate-hero-print hidden lg:col-span-5 lg:block">
           <ShotFrame>
             <img
-              src={shotSrc(shot, 800)}
+              src={src(shot, 800)}
               alt={shotAlt}
               width={800}
               height={500}

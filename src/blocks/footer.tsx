@@ -15,6 +15,17 @@ export function Footer() {
       ],
     },
     {
+      title: 'VectorCraft',
+      links: [
+        { label: m['vc.footer.overview'](), href: '/vectorcraft' },
+        { label: m['vc.footer.online'](), href: '/vectorcraft/online' },
+        {
+          label: m['vc.crumb.compare'](),
+          href: '/vectorcraft-vs-illustrator',
+        },
+      ],
+    },
+    {
       title: m['pc.footer.official'](),
       links: [
         {

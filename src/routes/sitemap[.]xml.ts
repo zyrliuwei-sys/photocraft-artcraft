@@ -2,12 +2,16 @@ import { createFileRoute } from '@tanstack/react-router';
 
 import { envConfigs } from '@/config';
 import { baseLocale, locales, localizeUrl } from '@/paraglide/runtime.js';
+import { getLocalPosts } from '@/content/posts';
 
 const STATIC_PATHS = [
   '',
   '/download',
   '/install-guide',
   '/photocraft-vs-photoshop',
+  '/vectorcraft',
+  '/vectorcraft/online',
+  '/vectorcraft-vs-illustrator',
   '/privacy-policy',
   '/terms-of-service',
 ];
@@ -63,29 +67,38 @@ export const Route = createFileRoute('/sitemap.xml')({
           priority: path === '' ? 1 : 0.8,
         }));
 
-        // Only published project articles belong in the sitemap. The bundled
-        // ShipAny tutorial posts are demo content and carry noindex.
+        // Blog: published database articles merged with local MDX posts
+        // (database wins on slug). /blog is listed once it has any post —
+        // an empty blog index is noindex.
+        let dbPosts: { slug: string; createdAt: Date | string }[] = [];
         try {
           const { listPublishedArticles } =
             await import('@/modules/posts/service');
-          const rows = await listPublishedArticles().catch(() => []);
-          if (rows.length > 0) {
-            entries.push({
-              path: '/blog',
-              changeFrequency: 'weekly',
-              priority: 0.7,
-            });
-          }
-          for (const post of rows) {
-            entries.push({
-              path: `/blog/${post.slug}`,
-              lastModified: new Date(post.createdAt).toISOString(),
-              changeFrequency: 'monthly',
-              priority: 0.6,
-            });
-          }
+          dbPosts = await listPublishedArticles().catch(() => []);
         } catch {
-          // Database unreachable — keep the static project pages.
+          // Database unreachable — local posts still go in.
+        }
+        const posts = new Map<string, string>();
+        for (const post of getLocalPosts(baseLocale)) {
+          posts.set(post.slug, post.createdAt);
+        }
+        for (const post of dbPosts) {
+          posts.set(post.slug, new Date(post.createdAt).toISOString());
+        }
+        if (posts.size > 0) {
+          entries.push({
+            path: '/blog',
+            changeFrequency: 'weekly',
+            priority: 0.7,
+          });
+        }
+        for (const [slug, createdAt] of posts) {
+          entries.push({
+            path: `/blog/${slug}`,
+            lastModified: createdAt,
+            changeFrequency: 'monthly',
+            priority: 0.6,
+          });
         }
 
         const xml = [

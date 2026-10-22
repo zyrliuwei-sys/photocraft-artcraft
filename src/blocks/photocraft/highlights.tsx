@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
+import { Link } from '@/core/i18n/navigation';
 import { PHOTOCRAFT_LINKS, SCREENSHOTS, shotSrc } from '@/config/photocraft';
 import { cn } from '@/lib/utils';
 import { m } from '@/paraglide/messages.js';
@@ -216,19 +217,36 @@ export function PhotoCraftArtCraft() {
                 i === 0 && 'border-t'
               )}
             >
-              <span
-                className={cn(
-                  'font-display text-2xl font-bold sm:text-3xl',
-                  i === 0 ? 'text-foreground' : 'text-foreground/70'
-                )}
-              >
-                {name}
-              </span>
+              {name === 'VectorCraft' ? (
+                <Link
+                  href="/vectorcraft"
+                  className="font-display text-foreground/70 hover:text-brand text-2xl font-bold underline-offset-4 hover:underline sm:text-3xl"
+                >
+                  {name}
+                </Link>
+              ) : (
+                <span
+                  className={cn(
+                    'font-display text-2xl font-bold sm:text-3xl',
+                    i === 0 ? 'text-foreground' : 'text-foreground/70'
+                  )}
+                >
+                  {name}
+                </span>
+              )}
               <span className="text-muted-foreground text-right text-sm">
                 {i === 0 ? (
                   <span className="text-brand font-semibold">
                     {m['pc.ac.you_are_here']()}
                   </span>
+                ) : name === 'VectorCraft' ? (
+                  <Link
+                    href="/vectorcraft"
+                    className="text-brand inline-flex items-center gap-1 font-semibold underline-offset-4 hover:underline"
+                  >
+                    {m['pc.ac.vc_guide']()}
+                    <ArrowRight className="size-3.5" />
+                  </Link>
                 ) : (
                   role()
                 )}

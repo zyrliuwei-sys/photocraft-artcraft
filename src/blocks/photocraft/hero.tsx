@@ -88,7 +88,7 @@ export function PhotoCraftHero() {
 
 export function PhotoCraftFacts() {
   const facts = [
-    { value: '44.1k', label: m['pc.stats.stars']() },
+    { value: '71k', label: m['pc.stats.stars']() },
     { value: '58', label: m['pc.stats.tools']() },
     { value: '27', label: m['pc.stats.blend']() },
     { value: '500+', label: m['pc.stats.commands']() },

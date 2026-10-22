@@ -1,10 +1,24 @@
-# Cloudflare static-asset headers for the PhotoCraft web editor (public/editor).
+# Cloudflare static-asset headers for the PhotoCraft web editor (public/editor),
+# following the upstream photocraft-web HOSTING.md / _headers.
 /editor/*.wasm
   Content-Type: application/wasm
   Cache-Control: public, max-age=31536000, immutable
 
 /editor/*.js
   Cache-Control: public, max-age=31536000, immutable
+
+# app/ holds the gzipped wasm parts, whose names carry a content hash...
+/editor/app/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# ...plus the loader and parts list, which keep their names between releases.
+/editor/app/photocraft-web.js
+  ! Cache-Control
+  Cache-Control: no-cache
+
+/editor/app/parts.txt
+  ! Cache-Control
+  Cache-Control: no-cache
 
 /editor/
   Cache-Control: no-cache
