@@ -1,6 +1,5 @@
-import { Download, Minus, Plus } from 'lucide-react';
+import { ArrowRight, Minus, Plus } from 'lucide-react';
 
-import { Link } from '@/core/i18n/navigation';
 import { shotSrc } from '@/config/photocraft';
 import { cn } from '@/lib/utils';
 import { m } from '@/paraglide/messages.js';
@@ -164,10 +163,11 @@ export function PhotoCraftCta() {
         <p className="mt-5 max-w-md text-lg text-[oklch(0.8_0.008_255)]">
           {m['pc.cta.sub']()}
         </p>
-        <Link href="/download" className={cn(btnPrimary, 'mt-9')}>
-          <Download className="size-[18px]" />
-          {m['pc.hero.cta_download']()}
-        </Link>
+        {/* Static WebAssembly build in public/editor — a plain anchor, not a router route. */}
+        <a href="/editor/" className={cn(btnPrimary, 'mt-9')}>
+          {m['pc.hero.cta_editor']()}
+          <ArrowRight className="size-[18px]" />
+        </a>
       </div>
       <div className="calibration-strip" aria-hidden />
     </section>
