@@ -2,6 +2,8 @@ import type { ComponentType } from 'react';
 
 import { baseLocale } from '@/paraglide/runtime.js';
 
+import { GUIDE_SLUGS } from './guides';
+
 /**
  * Local blog posts written as MDX files in this directory.
  * File naming: `<slug>.<locale>.mdx` (falls back to the base locale).
@@ -11,7 +13,7 @@ import { baseLocale } from '@/paraglide/runtime.js';
  * fetched through the server functions in ./server.ts and merged with the
  * local posts via the pure helpers below.
  */
-export const BLOG_POST_SLUGS: readonly string[] = [];
+export const BLOG_POST_SLUGS: readonly string[] = GUIDE_SLUGS;
 
 export type BlogPostMeta = {
   title: string;
@@ -20,6 +22,8 @@ export type BlogPostMeta = {
   author_name?: string;
   author_image?: string;
   image?: string;
+  image_alt?: string;
+  image_caption?: string;
 };
 
 type PostModule = {
@@ -40,6 +44,8 @@ export type BlogPost = {
 };
 
 export type BlogPostDetail = BlogPost & {
+  imageAlt?: string;
+  imageCaption?: string;
   /** Raw markdown — set for database posts */
   content?: string;
 };

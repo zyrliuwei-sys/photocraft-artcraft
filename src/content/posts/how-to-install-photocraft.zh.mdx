@@ -1,0 +1,81 @@
+import { GuideFigure } from '@/components/guide-figure';
+
+import { getGuideMeta } from './guides';
+
+export const meta = getGuideMeta('how-to-install-photocraft', 'zh');
+
+**安装 PhotoCraft** 的基本顺序是：选择 ArtCraft Launcher 或独立安装包，匹配操作系统和处理器架构，启动后做一次保存与导出测试。使用官方桌面构建不需要自己编译源码。
+
+[PhotoCraft 首页](/)介绍编辑器本身。这篇指南讲安装包选择与首次验证；想快速查平台命令，可看[安装速查页](/install-guide)，各系统文件集中在[下载页](/download)。
+
+## 启动器与独立安装包怎么选？
+
+[官方下载页](https://getartcraft.com/apps/photocraft#get-it)提供两种方式。启动器管理 Crafting Apps 及其更新；独立安装包只安装 PhotoCraft。准备使用家族中的多个应用，可以选择启动器；希望单独管理编辑器，可以选择独立安装包。
+
+初次试用选一种即可。如果电脑已有 PhotoCraft，先确认它原来的安装方式，避免同时保留多个版本后误开旧副本。
+
+<GuideFigure
+  src="/imgs/guides/launcher-download.webp"
+  width={1600}
+  height={626}
+  alt="ArtCraft 官方页面中的启动器安装方式说明"
+  caption="2026 年 11 月 5 日截取的官方下载页启动器说明。具体下载选项可能随版本更新。"
+/>
+
+## 找到与电脑匹配的文件
+
+- **Mac：**图形界面应用选择 macOS Universal DMG。单独的 CLI ZIP 用于命令行。
+- **Windows：**先选择 x64、ARM64 或 x86 架构，再决定 MSI 安装包还是便携 ZIP。
+- **Linux：**根据发行版和处理器选择 Flatpak、AppImage、DEB、RPM 等格式。
+
+确切文件名和版本说明以[上游最新发布页](https://github.com/storytold/photocraft/releases/latest)为准。配图里的版本号只是截图时的记录，不是永久推荐版本。Web ZIP 用于托管浏览器构建，不是桌面安装程序。
+
+## 在 macOS 上安装
+
+打开 DMG，按照磁盘映像中的安装布局，把应用复制到 Applications。等待复制完成后推出磁盘映像，再从 Applications 打开 PhotoCraft，避免每次都运行下载映像中的副本。
+
+首次打开出现提示时，先读清具体内容。遇到验证问题，请核实来源并参考 [Apple 的应用打开说明](https://support.apple.com/en-us/102445)。文件损坏或恶意软件提示需要重新下载和排查，不应通过整体关闭系统安全功能解决。[Mac 专项指南](/blog/artcraft-for-mac)进一步介绍了这些情况和项目检查方法。
+
+## 在 Windows 上安装
+
+进入**设置 → 系统 → 系统信息（About）**，查看系统类型，选择对应架构。使用 MSI 时，打开安装程序并按提示完成；使用便携 ZIP 时，先把整个压缩包解压到可写文件夹，再运行里面的应用。
+
+保留完整目录结构。直接在 ZIP 预览中启动，或只把一个可执行文件移到桌面，可能遗漏运行所需资源。[Windows 指南](/blog/photocraft-windows-guide)说明了 MSI 与便携版的选择和启动故障排查。
+
+## 在 Linux 上安装
+
+DEB 和 RPM 应使用相应发行版的包管理工具。AppImage 可在文件属性中允许执行，也可在下载文件所在目录运行下面的命令。将 `VERSION` 替换为实际文件名里的版本号；下面示例针对 x86_64 架构。
+
+```sh
+chmod +x photocraft-VERSION-linux-x86_64.AppImage
+./photocraft-VERSION-linux-x86_64.AppImage
+```
+
+独立 Flatpak 包的安装与启动示例：
+
+```sh
+flatpak install --user ./photocraft-VERSION-linux-x86_64.flatpak
+flatpak run ai.storyteller.photocraft
+```
+
+仔细查看运行时安装提示。[上游安装说明](https://github.com/storytold/photocraft#get-started)介绍了所需 Flatpak 运行时及当前 Linux 行为。如果 Wayland 下把文件拖进窗口没有反应，先用 **File → Open** 打开文件。拖放限制不一定意味着安装失败。
+
+## 用小文件确认安装成功
+
+能打开窗口还不够。新建练习文件夹，打开一张可丢弃的测试图片，做一次简单修改并另存为新文件。关闭文档，重新打开刚保存的副本，最后导出 PNG 或 JPEG，在另一个查看器里检查。
+
+<GuideFigure
+  src="/imgs/photocraft/export-light-1600.webp"
+  alt="浅色主题下 PhotoCraft 的 Export As 窗口，包含预览与导出设置"
+  caption="上游真实界面截图：安装后通过一次小图导出检查尺寸与输出。你使用的版本可能采用不同主题和控件。"
+/>
+
+确认文件位于所选目录、尺寸正确，并且能在 PhotoCraft 以外打开。这个检查能提前发现保存权限和输出路径问题。
+
+## 安装未完成时如何排查？
+
+每次只检查一个变量：下载来源、处理器架构、是否完整解压、剩余空间，以及准确的报错内容。下载不完整时，删除失败的安装包并从官方重新获取。如果发布页提供 `SHA256SUMS.txt`，请与完全相同文件名的条目对比校验和。
+
+问题仍然存在时，为上游 issue 记录应用版本、系统版本、处理器架构和错误文本。先用不含敏感内容的样例复现，不要直接上传保密项目。
+
+保存与导出测试通过后，继续阅读[首次编辑指南](/blog/artcraft-photoshop-guide)，或回到 [PhotoCraft 首页](/)。

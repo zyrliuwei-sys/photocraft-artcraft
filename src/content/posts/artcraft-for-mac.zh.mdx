@@ -1,0 +1,69 @@
+import { GuideFigure } from '@/components/guide-figure';
+
+import { getGuideMeta } from './guides';
+
+export const meta = getGuideMeta('artcraft-for-mac', 'zh');
+
+搜索 **ArtCraft for Mac** 并希望编辑照片或 PSD 时，可以先了解 PhotoCraft。ArtCraft 家族还有其他工具，应该按任务选择：像素图像编辑用 PhotoCraft，矢量插画可了解 [VectorCraft](/vectorcraft)。
+
+这篇指南按 macOS 桌面流程展开：找到正确应用、放进 Applications、打开练习文件，再确认工作副本保存后仍能正常打开。产品功能概览见 [PhotoCraft 首页](/)。
+
+## 选择 macOS 图形应用，而不是 CLI
+
+[官方下载页](https://getartcraft.com/apps/photocraft#get-it)提供面向 Apple silicon 和 Intel Mac 的 **Universal DMG**，同时列出单独的命令行 ZIP。想使用图形编辑器，应选择 DMG；只有明确需要终端自动化时，才选择 CLI。
+
+Universal 表示应用包含的处理器架构，并不承诺支持所有旧版 macOS。下载前请同时检查所选构建的发布说明和电脑系统版本，尤其是较老的 Mac。
+
+<GuideFigure
+  src="/imgs/guides/mac-download-options.webp"
+  width={758}
+  height={352}
+  alt="PhotoCraft 官方 macOS 下载卡片，分别列出 Universal 磁盘映像和命令行工具"
+  caption="2026 年 11 月 5 日截取的官方 macOS 选项。图形应用与命令行工具是不同文件，最新版本以官方页面为准。"
+/>
+
+本站[下载页](/download)汇总各平台入口，[官方最新发布页](https://github.com/storytold/photocraft/releases/latest)用于确认当前上游版本。如果希望统一管理多个 Crafting Apps，也可以选择 ArtCraft Launcher。
+
+## 安装并打开已复制的应用
+
+1. 从官方来源下载 DMG，等待文件下载完整。
+2. 在 Finder 中打开磁盘映像，按其中的安装布局将 PhotoCraft 复制到 Applications。
+3. 复制完成后推出磁盘映像。
+4. 从 Applications 启动应用，需要时把这个副本固定到 Dock。
+5. 新建本地练习目录，放入一张小图片的副本。
+
+如果已有旧版本，先保存工作并退出，再替换或更新应用。项目文档应放在自己的文件夹，不要存进应用包或已挂载的磁盘映像，避免后续更新时把程序文件和作品混在一起。
+
+## 分清首次打开提示
+
+“是否确认打开互联网下载的应用”与“文件损坏或包含恶意内容”是不同类型的提示。先核实具体文字，确认来源是官方项目，下载也已完整结束。
+
+对于开发者无法验证或公证问题，[Apple 说明了按应用使用 Open Anyway 的方式](https://support.apple.com/en-us/102445)：尝试打开后，在系统设置 → 隐私与安全性中查看是否提供该选项。只有确认应用来源可信时才使用。如果提示文件损坏或会危害电脑，应停止并排查，或重新下载官方副本。受单位管理的 Mac 可能需要管理员处理。
+
+## 先测试一个简单的编辑流程
+
+通过 **File → Open** 打开练习图片，做轻微调整，在独立图层上加入短文字，然后另存为新工作文件。重新打开这份文件，再导出一张图片并用“预览”查看结果。
+
+<GuideFigure
+  src="/imgs/photocraft/adjustments-1600.webp"
+  alt="PhotoCraft 中港口画作旁边的调整控件与直方图"
+  caption="上游 PhotoCraft 界面参考：小幅调整适合用来验证第一个项目。此图是编辑器画面，不是 macOS 安装界面。"
+/>
+
+测试时保持单一目标：先确认打开和保存，再检查文字，最后测试真实 PSD 的副本。不要同时改变文档尺寸、颜色设置和所有图层，否则发现差异时不容易定位原因。
+
+## 检查 PSD 交接与字体
+
+需要把文件交给另一台电脑时，挑选包含代表性图层和文字的副本。记录所用字体，并确认接收设备是否安装。文件能够打开，也可能因字体变化而改变换行和版式。
+
+在相同缩放比例下比较原文件与重新打开的副本，检查蒙版、混合效果、图层样式和尺寸。如果接收方使用 Photoshop，也应在那里打开新保存的 PSD。接收应用未验证通过前，保留未修改原件。
+
+## 按具体症状排查
+
+- **只有挂载 DMG 时才能运行：**确认应用已复制到 Applications，并从那里启动。
+- **总是打开旧版本：**查看 Downloads 等目录是否还留着另一份应用。
+- **字体或版式变化：**先使用本地已有字体，将文字问题与图片渲染问题分开测试。
+- **可以启动但无法保存：**在有写权限的本地目录里创建新文件，同时检查磁盘空间。
+- **只有某个项目失败：**先测试较小图片，再记录失败文档的尺寸和图层数量。
+
+需要报告版本问题时，在[项目问题页](https://github.com/storytold/photocraft/issues)提供操作系统、应用版本和最小复现样例。开始编辑可读 [ArtCraft Photoshop 上手指南](/blog/artcraft-photoshop-guide)；其他系统安装方式见[完整安装指南](/blog/how-to-install-photocraft)。也可以返回 [PhotoCraft 首页](/)。

@@ -7,6 +7,7 @@ import { Header } from '@/blocks/header';
 
 import { PhotoCraftCompare } from './compare';
 import { PhotoCraftDownload } from './download';
+import { PhotoCraftGuides } from './guides';
 import { PhotoCraftFacts, PhotoCraftHero, PhotoCraftIntro } from './hero';
 import {
   PhotoCraftArtCraft,
@@ -41,6 +42,7 @@ export function PhotoCraftHomePage() {
       <PhotoCraftInstall />
       <PhotoCraftCompare />
       <PhotoCraftReview />
+      <PhotoCraftGuides />
       <PhotoCraftFaq />
       <PhotoCraftCta />
     </Shell>

@@ -10,6 +10,7 @@ export function Footer() {
       links: [
         { label: m['pc.nav.download'](), href: '/download' },
         { label: m['pc.nav.install'](), href: '/install-guide' },
+        { label: m['guides.nav'](), href: '/blog' },
         { label: m['pc.nav.compare'](), href: '/photocraft-vs-photoshop' },
         { label: m['pc.nav.faq'](), href: '/#faq' },
       ],

@@ -9,6 +9,7 @@ export function Header() {
     { href: '/install-guide', label: m['pc.nav.install']() },
     { href: '/photocraft-vs-photoshop', label: m['pc.nav.compare']() },
     { href: '/vectorcraft', label: 'VectorCraft' },
+    { href: '/#guides', label: m['guides.nav']() },
     { href: '/#artcraft', label: m['pc.nav.artcraft']() },
     { href: '/#faq', label: m['pc.nav.faq']() },
   ];
