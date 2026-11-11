@@ -15,6 +15,7 @@ import geistLatinUrl from '@fontsource-variable/geist/files/geist-latin-wght-nor
 import { ThemeProvider } from 'next-themes';
 
 import { envConfigs } from '@/config';
+import { resolveAdsenseCode } from '@/lib/adsense';
 import { getQueryClient } from '@/lib/query-client';
 import { getLocale } from '@/paraglide/runtime.js';
 import { Ads } from '@/components/analytics/ads';
@@ -49,7 +50,7 @@ const getAnalyticsConfigs = createServerFn().handler(async () => {
     plausibleDomain: configs.plausible_domain?.trim() || '',
     plausibleSrc: configs.plausible_src?.trim() || '',
     clarityProjectId: configs.clarity_project_id?.trim() || '',
-    adsenseCode: configs.adsense_code?.trim() || '',
+    adsenseCode: resolveAdsenseCode(configs.adsense_code),
     crispWebsiteId:
       configs.crisp_enabled === 'true'
         ? configs.crisp_website_id?.trim() || ''
@@ -67,13 +68,19 @@ const getAnalyticsConfigs = createServerFn().handler(async () => {
 
 export const Route = createRootRoute({
   loader: () => getAnalyticsConfigs(),
-  head: () => {
+  head: ({ loaderData }) => {
     return {
       meta: [
         { charSet: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { title: envConfigs.app_name },
         { name: 'description', content: envConfigs.app_description },
+        loaderData?.adsenseCode
+          ? {
+              name: 'google-adsense-account',
+              content: loaderData.adsenseCode,
+            }
+          : {},
       ],
       links: [
         // Preload the latin display/body fonts (declared in styles/fonts.css
