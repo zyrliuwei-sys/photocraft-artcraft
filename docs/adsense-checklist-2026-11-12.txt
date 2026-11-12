@@ -1,13 +1,13 @@
 photocraftartcraft.com AdSense 提交前修复清单
 验收日期：2026-11-12（Asia/Shanghai）
-状态：代码和本地验收完成；Cloudflare 构建完成；站主已选择自行部署，本次不发布。公网 /about 和 /contact 在发布前仍为 404。
-本地验收基址：http://localhost:3000。下面的对应 URL 为最终公网地址，不能把本地结果当作已上线结果。
+状态：已获站主明确授权并完成 Cloudflare 生产发布，公网验收通过。Worker：photocraft-artcraft-ai；版本 ID：17e1deb4-0bfe-4424-9fe2-168cbd2896e0
+公网验收基址：https://photocraftartcraft.com；www.photocraftartcraft.com 也已绑定此版本。保留本地检查记录，并在下方补入最终公网结果。
 
 A1–A4 验收结果
-A1：本地 HTTP 200；Title 精确匹配要求；SSR 正文 410 词；四项内容均实际显示。公网：发布前 HTTP 404。
-A2：本地 HTTP 200；实际可见邮箱 support@photocraftartcraft.com 和 2 business days 回复时效。公网：发布前 HTTP 404。
-A3：首页 /、文章 /blog/artcraft-photoshop-guide、下载 /download 均本地 HTTP 200；页头和页脚均实际输出 /about、/contact 的 a href。公网：待发布后验收。
-A4：本地 /sitemap.xml HTTP 200；包含两个完整公网 URL，lastmod=2026-11-12。公网：待发布后验收。
+A1：公网 /about HTTP 200；Title 精确匹配要求；初始 SSR HTML 正文 410 词；网站用途、独立开发者维护、内容来源、无隶属和背书声明均实际显示。
+A2：公网 /contact HTTP 200；实际显示 support@photocraftartcraft.com 和 We usually reply within 2 business days；浏览器点击页头 Contact 可进入页面。
+A3：首页 /、文章 /blog/artcraft-photoshop-guide、下载 /download 均公网 HTTP 200；页头和页脚均实际输出 /about、/contact 的 a href。
+A4：公网 /sitemap.xml HTTP 200；包含 /about、/contact 两个完整公网 URL，lastmod 均为 2026-11-12；三篇新文章也均在 sitemap。
 
 A1 About
 对应 URL：https://photocraftartcraft.com/about
@@ -55,7 +55,7 @@ B1 下载版本
 
 B2 GitHub 数据
 对应 URL：https://photocraftartcraft.com/
-改动与验收：构建时更新 stars、forks、默认分支 commits、releases；显示统计日期。当前快照：78772 stars，13923 forks，524 contributors，12393 commits，26 releases。API 采集时间 2026-11-12T02:24:22.395Z。贡献者 524 来自 GitHub 仓库页面，核验日期 2026-11-12；REST 列表的账号数口径不同，页面明确标注贡献者来源和日期，后续构建保留该单独核验日期。
+改动与验收：构建时更新 stars、forks、默认分支 commits、releases；显示统计日期。当前快照：78783 stars，13925 forks，524 contributors，12394 commits，26 releases。API 采集时间 2026-11-12T03:11:30.015Z。贡献者 524 来自 GitHub 仓库页面，核验日期 2026-11-12；REST 列表的账号数口径不同，页面明确标注贡献者来源和日期，后续构建保留该单独核验日期。
 文件：
 /Users/wl./Desktop/saas/代码/photocraft artcraft/src/blocks/photocraft/hero.tsx
 
@@ -101,4 +101,21 @@ security-scan --worktree：通过；人工审查本次改动未发现可利用�
 public/ads.txt 和 src/routes/ads[.]txt.ts 未修改。
 没有新增中文页面，没有新增站内安装包或镜像文件。
 没有修改数据库 schema，没有执行数据库迁移，没有创建或修改管理员账号。
-当前代码未提交 git commit；生产发布由站主自行执行。
+本次部署未创建新的 git commit；发布包含当前工作区代码及构建时刷新的 GitHub 数据。
+
+最终公网发布验收
+核验时间：2026-11-12T11:03:50+08:00
+Cloudflare 版本 ID：8068c83c-dc77-4af1-ba3d-60f448c1ed28
+首页、About、Contact、下载页、Guides 列表、示例旧文章、三篇新文章、sitemap.xml、robots.txt、ads.txt、/api/config/public：13 个请求全部 HTTP 200。
+三篇新文章 SSR 正文分别为 673、701、806 词，正文 H2 分别为 5、5、6 个。
+首页和 Guides 列表均包含三篇入口；新页面在 sitemap 中只列英文 URL。
+首页 Title、H1、meta description 与发布前保持一致。ads.txt 与指定的 Google 发布商记录完全一致。
+本地 .env.production 的 VITE_APP_NAME 和 VITE_APP_DESCRIPTION 补充了 shell 引号，值未变；该文件仍由 git 忽略。
+
+文案修正发布
+核验时间：2026-11-12T11:13:14+08:00
+Cloudflare 版本 ID：17e1deb4-0bfe-4424-9fe2-168cbd2896e0
+首页 Guides 的 Four 已改为 7。首页统计栏与 ArtCraft 介绍、以及已有中文页面的两处 star 文案统一显示 78,000+，由同一展示值生成；GitHub API 原始计数继续保留。
+/blog 页面介绍和 meta description 同时更新为：PhotoCraft guides to installation, PSD compatibility checks, large-image workflows, and troubleshooting on macOS, Windows, and Linux.
+对应修改文件：messages/en.json、messages/zh.json、src/config/photocraft.ts、src/blocks/photocraft/hero.tsx、src/blocks/photocraft/highlights.tsx。构建时同时刷新 src/config/photocraft-github.json。
+公网 /、/blog、/zh 全部 HTTP 200；两种语言首页均实际显示两处 78,000+，没有旧的 70,000 文案。首页 Title、H1、meta description 保持不变。pnpm build、TypeScript、安全扫描和 git diff --check 通过。

@@ -919,7 +919,7 @@
   "pc.ac.title": "一个开源工作室，七款 Crafting Apps",
   "pc.ac.p1": "ArtCraft 最初是一个开源工作室，主打可控的 AI 图像和视频生成，为电影人和艺术家提供 2D / 3D 合成、角色姿态控制和场景布置。2026 年，团队开始用 Rust 把经典的桌面创意套件重建成一系列 Crafting Apps，PhotoCraft 是其中第一款，也是最成熟的一款。",
   "pc.ac.p2": "ArtCraft 开源意味着你可以阅读每一行代码、自己编译，也可以发布修改版。PhotoCraft 采用 MIT 或 Apache-2.0 双许可证，允许商业使用。ArtCraft 的名称和标志仍是项目商标，所以分支版本需要使用自己的品牌。",
-  "pc.ac.p3": "所有应用都通过同一个 ArtCraft 启动器安装和更新，共享同一套命令系统，并在 GitHub 上公开开发。仅 PhotoCraft 一个仓库就已超过 70,000 个 Star。",
+  "pc.ac.p3": "所有应用都通过同一个 ArtCraft 启动器安装和更新，共享同一套命令系统，并在 GitHub 上公开开发。仅 PhotoCraft 一个仓库就有 {stars} 个 Star。",
   "pc.ac.app.photocraft": "图像编辑",
   "pc.ac.app.vectorcraft": "矢量插画",
   "pc.ac.app.filmcraft": "视频剪辑",

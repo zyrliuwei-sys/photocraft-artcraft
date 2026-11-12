@@ -117,13 +117,13 @@
     }
   },
   "stats": {
-    "stars": 78772,
-    "forks": 13923,
+    "stars": 78783,
+    "forks": 13925,
     "contributors": 524,
     "contributorsCheckedAt": "2026-11-12",
-    "commits": 12393,
+    "commits": 12394,
     "releases": 26,
-    "observedAt": "2026-11-12T02:24:22.395Z",
+    "observedAt": "2026-11-12T03:11:30.015Z",
     "source": "https://github.com/storytold/photocraft"
   }
 }

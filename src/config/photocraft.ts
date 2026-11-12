@@ -8,6 +8,9 @@ export const PHOTOCRAFT_VERSION = github.release.version;
 export const LAUNCHER_VERSION = github.launcher.version;
 export const PHOTOCRAFT_RELEASE_DATE = github.release.publishedAt;
 export const PHOTOCRAFT_STATS = github.stats;
+export const PHOTOCRAFT_STARS_LABEL = `${new Intl.NumberFormat('en-US').format(
+  Math.floor(PHOTOCRAFT_STATS.stars / 1000) * 1000
+)}+`;
 
 export const PHOTOCRAFT_LINKS = {
   repo: 'https://github.com/storytold/photocraft',

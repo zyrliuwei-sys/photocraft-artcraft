@@ -3,6 +3,7 @@ import { ArrowRight, Download } from 'lucide-react';
 import { Link } from '@/core/i18n/navigation';
 import {
   PHOTOCRAFT_LINKS,
+  PHOTOCRAFT_STARS_LABEL,
   PHOTOCRAFT_STATS,
   PLATFORM_DOWNLOADS,
   shotSrc,
@@ -91,7 +92,7 @@ export function PhotoCraftFacts() {
   const format = (value: number) =>
     new Intl.NumberFormat('en-US').format(value);
   const facts = [
-    { value: format(PHOTOCRAFT_STATS.stars), label: m['pc.stats.stars']() },
+    { value: PHOTOCRAFT_STARS_LABEL, label: m['pc.stats.stars']() },
     { value: format(PHOTOCRAFT_STATS.forks), label: m['pc.stats.forks']() },
     {
       value: format(PHOTOCRAFT_STATS.contributors),

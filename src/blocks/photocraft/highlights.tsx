@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 
 import { Link } from '@/core/i18n/navigation';
-import { PHOTOCRAFT_LINKS, SCREENSHOTS, shotSrc } from '@/config/photocraft';
+import {
+  PHOTOCRAFT_LINKS,
+  PHOTOCRAFT_STARS_LABEL,
+  SCREENSHOTS,
+  shotSrc,
+} from '@/config/photocraft';
 import { cn } from '@/lib/utils';
 import { m } from '@/paraglide/messages.js';
 import {
@@ -196,7 +201,7 @@ export function PhotoCraftArtCraft() {
           <div className="text-foreground/85 mt-8 max-w-[60ch] space-y-5 text-[1.05rem] leading-[1.75]">
             <p>{m['pc.ac.p1']()}</p>
             <p>{m['pc.ac.p2']()}</p>
-            <p>{m['pc.ac.p3']()}</p>
+            <p>{m['pc.ac.p3']({ stars: PHOTOCRAFT_STARS_LABEL })}</p>
           </div>
           <a
             href={PHOTOCRAFT_LINKS.artcraft}
