@@ -4,7 +4,7 @@ import { Link } from '@/core/i18n/navigation';
 import { m } from '@/paraglide/messages.js';
 import { getLocale } from '@/paraglide/runtime.js';
 import { Section, SectionHeading } from '@/components/editorial-section';
-import { getGuideMeta, GUIDE_SLUGS } from '@/content/posts/guides';
+import { getGuideMeta, getGuideSlugs } from '@/content/posts/guides';
 
 export function PhotoCraftGuides() {
   const locale = getLocale();
@@ -24,7 +24,7 @@ export function PhotoCraftGuides() {
         </Link>
       </div>
       <div className="mt-12 grid gap-x-6 gap-y-10 sm:grid-cols-2 xl:grid-cols-4">
-        {GUIDE_SLUGS.map((slug, index) => {
+        {getGuideSlugs(locale).map((slug, index) => {
           const guide = getGuideMeta(slug, locale);
           return (
             <Link key={slug} href={`/blog/${slug}`} className="group min-w-0">

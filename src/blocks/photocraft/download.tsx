@@ -5,6 +5,7 @@ import {
   EXTRA_DOWNLOADS,
   LAUNCHER_VERSION,
   PHOTOCRAFT_LINKS,
+  PHOTOCRAFT_RELEASE_DATE,
   PHOTOCRAFT_VERSION,
   PLATFORM_DOWNLOADS,
   type DownloadFile,
@@ -55,6 +56,15 @@ export function PhotoCraftDownload({ heading = true }: { heading?: boolean }) {
       {heading && (
         <SectionHeading title={m['pc.dl.title']()} sub={m['pc.dl.sub']()} />
       )}
+      <p className="text-muted-foreground mt-6 text-sm">
+        <a
+          href={PHOTOCRAFT_LINKS.releaseNotes}
+          className="font-semibold underline underline-offset-4"
+        >
+          {m['pc.dl.version']({ version: PHOTOCRAFT_VERSION })}
+        </a>{' '}
+        — {m['pc.dl.published']({ date: PHOTOCRAFT_RELEASE_DATE.slice(0, 10) })}
+      </p>
 
       <div
         className={cn(

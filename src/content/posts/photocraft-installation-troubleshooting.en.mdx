@@ -1,0 +1,49 @@
+import { getEnglishGuideMeta } from './english-guides';
+
+export const meta = getEnglishGuideMeta(
+  'photocraft-installation-troubleshooting'
+);
+
+When PhotoCraft will not install or start, begin with the package and the exact message. Repeatedly downloading a different-looking file can introduce a second problem before the first is understood. Keep the filename, application version, operating-system version, and error text together as you investigate.
+
+This guide organizes diagnostic steps for Mac, Windows, and Linux. It draws on the [official v0.23.0 release assets](https://github.com/storytold/photocraft/releases/tag/v0.23.0) and the project's [README](https://github.com/storytold/photocraft/blob/v0.23.0/README.md). It does not claim that every error listed here has been reproduced on a test machine. Use the branch matching your actual symptom and change one condition at a time.
+
+## Before troubleshooting any platform
+
+Download from the official GitHub release, using our [download page](/download) as an index. Match the operating system and processor architecture. The source-code archives and web ZIP are not desktop installers. If a checksum file is supplied, compare the download with that file before investigating an apparently damaged package.
+
+Preserve your documents and test with a small, non-sensitive image. Check free disk space and use a local folder you can write to. If a device belongs to an employer or school, resolve installation restrictions with its administrator; a portable build does not remove those restrictions.
+
+## Mac: distinguish the disk image from the installed app
+
+For the release discussed here, the desktop asset is the macOS universal DMG. Open the disk image and follow its installation instructions, then launch the installed application. If an older copy keeps appearing, inspect the location of the app you opened and close other copies before trying again.
+
+If macOS reports that the download is damaged, first verify its official source and checksum where available, then try a fresh download. If it displays a developer or security warning, read the exact message and consult [Apple's guidance on safely opening apps](https://support.apple.com/en-us/102445). Do not disable system-wide protection or paste a blanket quarantine-removal command as a routine fix.
+
+If the application launches but cannot save, use a new local test folder and check its permissions. A startup problem, a protected destination, and a damaged input file need different evidence. Note which stage fails instead of describing all three as “installation failed.”
+
+## Windows: match the architecture and extract portable builds
+
+Check **Settings → System → About → System type**. Choose x64 or ARM64 according to the computer and the release's available assets. The v0.23.0 release provides those architectures; do not assume a Windows x86 installer exists because an older guide or screenshot mentions one.
+
+For an MSI failure, keep the installer message and check whether another installation is still running. On a managed machine, ask the administrator about the relevant restriction. For a portable ZIP, finish extracting the entire archive into a new writable folder, then run the application from there with its accompanying files intact.
+
+A missing-file or DLL message is a reason to check extraction and the official package, not to download individual DLLs from unrelated sites. If Windows displays a security warning, verify the origin and consult the system's explanation before making an exception.
+
+## Linux: check package format, permissions, and launch output
+
+Match both the CPU architecture and distribution package format. An AppImage, DEB, RPM, and Flatpak bundle use different installation mechanisms; renaming one does not convert it into another. Follow the requirements of the release and your distribution.
+
+For an AppImage that lacks execute permission, inspect the file and grant permission only to that verified download. If it still will not start, launch it from a terminal and keep the output. A message about FUSE, a missing system library, or a graphics adapter points to a different next step. Use your distribution's documentation for required dependencies rather than an unverified command copied from a forum.
+
+For package-manager failures, record the package name and dependency message. Do not force an incompatible architecture or remove system packages to make an experimental install proceed. Use a supported alternative official package when appropriate.
+
+## The window opens, but the canvas is blank or export fails
+
+Try a small ordinary image in a new session. If that works, the original document or its format deserves a separate investigation. If every image fails to draw, record the GPU model and driver version and check supported driver updates through the operating-system or hardware vendor's normal route.
+
+For an export failure, test a writable local destination and a different non-sensitive input. Preserve the exact message and note whether saving the working document succeeds. See our [large-image workflow](/blog/photocraft-large-image-workflow) for a way to separate memory pressure, scratch storage, and export validation.
+
+## Write a report someone can reproduce
+
+Search the [official issue tracker](https://github.com/storytold/photocraft/issues) before opening a report. Include the release, package filename, operating system, architecture, exact message, and the shortest steps that reproduce the failure. Add a shareable sample only when needed and remove personal information from logs. Contact [this site's maintainer](/contact) for broken links or incorrect instructions on these pages; application bugs belong with the software project.

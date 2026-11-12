@@ -1,6 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 
 import { envConfigs } from '@/config';
+import {
+  ENGLISH_ONLY_PAGE_SLUGS,
+  isEnglishOnlyPath,
+} from '@/config/english-content';
 import { baseLocale, locales, localizeUrl } from '@/paraglide/runtime.js';
 import { getLocalPosts } from '@/content/posts';
 
@@ -14,6 +18,7 @@ const STATIC_PATHS = [
   '/vectorcraft-vs-illustrator',
   '/privacy-policy',
   '/terms-of-service',
+  ...ENGLISH_ONLY_PAGE_SLUGS.map((slug) => `/${slug}`),
 ];
 
 type Entry = {
@@ -21,6 +26,7 @@ type Entry = {
   lastModified?: string;
   changeFrequency: string;
   priority: number;
+  locales?: readonly (typeof locales)[number][];
 };
 
 function urlFor(path: string, locale: string): string {
@@ -33,14 +39,15 @@ function urlFor(path: string, locale: string): string {
 // recommended hreflang form) — so /zh pages are real <loc>s that crawlers and
 // the IndexNow sitemap submit pick up, not just alternates of the en page.
 function entryXml(e: Entry): string {
+  const availableLocales = e.locales ?? locales;
   const alternates = [
-    ...locales.map(
+    ...availableLocales.map(
       (loc) =>
         `    <xhtml:link rel="alternate" hreflang="${loc}" href="${urlFor(e.path, loc)}"/>`
     ),
     `    <xhtml:link rel="alternate" hreflang="x-default" href="${urlFor(e.path, baseLocale)}"/>`,
   ].join('\n');
-  return locales
+  return availableLocales
     .map((loc) =>
       [
         '  <url>',
@@ -65,6 +72,9 @@ export const Route = createFileRoute('/sitemap.xml')({
           path,
           changeFrequency: path === '/blog' ? 'daily' : 'weekly',
           priority: path === '' ? 1 : 0.8,
+          ...(isEnglishOnlyPath(path)
+            ? { lastModified: '2026-11-12', locales: [baseLocale] }
+            : {}),
         }));
 
         // Blog: published database articles merged with local MDX posts
@@ -98,6 +108,9 @@ export const Route = createFileRoute('/sitemap.xml')({
             lastModified: createdAt,
             changeFrequency: 'monthly',
             priority: 0.6,
+            ...(isEnglishOnlyPath(`/blog/${slug}`)
+              ? { locales: [baseLocale] }
+              : {}),
           });
         }
 

@@ -13,7 +13,7 @@ import {
   loadLocalPost,
   type BlogPostDetail,
 } from '@/content/posts';
-import { getGuideMeta, GUIDE_SLUGS } from '@/content/posts/guides';
+import { getGuideMeta, getGuideSlugs } from '@/content/posts/guides';
 
 export function BlogPost({
   locale,
@@ -107,19 +107,21 @@ export function BlogPost({
               {m['guides.related']()}
             </h2>
             <ul className="divide-border mt-4 divide-y">
-              {GUIDE_SLUGS.filter((slug) => slug !== post.slug).map((slug) => (
-                <li key={slug}>
-                  <Link
-                    href={`/blog/${slug}`}
-                    className="group flex items-center justify-between gap-4 py-4 text-sm font-medium"
-                  >
-                    <span className="group-hover:underline">
-                      {getGuideMeta(slug, locale).title}
-                    </span>
-                    <ArrowRight className="size-4 shrink-0" />
-                  </Link>
-                </li>
-              ))}
+              {getGuideSlugs(locale)
+                .filter((slug) => slug !== post.slug)
+                .map((slug) => (
+                  <li key={slug}>
+                    <Link
+                      href={`/blog/${slug}`}
+                      className="group flex items-center justify-between gap-4 py-4 text-sm font-medium"
+                    >
+                      <span className="group-hover:underline">
+                        {getGuideMeta(slug, locale).title}
+                      </span>
+                      <ArrowRight className="size-4 shrink-0" />
+                    </Link>
+                  </li>
+                ))}
             </ul>
           </aside>
           <section className="bg-secondary mt-8 rounded-[var(--radius)] p-6 sm:p-8">

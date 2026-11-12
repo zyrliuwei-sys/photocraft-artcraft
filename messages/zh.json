@@ -1343,5 +1343,14 @@
   "guides.mac.image_alt": "PhotoCraft 的文字编辑工作区，显示风景画、字符设置和段落控件",
   "guides.windows.title": "PhotoCraft Windows 指南：MSI、便携版与首次启动",
   "guides.windows.description": "分清 x64、ARM64 和 x86，选择 MSI 或便携安装包，排查 PhotoCraft 在 Windows 上的首次运行问题。",
-  "guides.windows.image_alt": "PhotoCraft 的图层样式对话框，在地出照片上预览文字效果"
+  "guides.windows.image_alt": "PhotoCraft 的图层样式对话框，在地出照片上预览文字效果",
+  "pc.nav.about": "About",
+  "pc.nav.contact": "Contact",
+  "pc.stats.forks": "Fork",
+  "pc.stats.contributors": "贡献者",
+  "pc.stats.commits": "提交",
+  "pc.stats.releases": "版本发布",
+  "pc.stats.as_of": "统计截至 {date}（UTC）",
+  "pc.stats.scope": "贡献者数来自 GitHub 仓库页面，核验于 {date}；其余数字来自 GitHub API，提交数取默认分支。",
+  "pc.dl.published": "发布于 {date}（UTC）"
 }

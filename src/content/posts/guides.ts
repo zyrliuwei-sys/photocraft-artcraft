@@ -1,17 +1,30 @@
+import { ENGLISH_ONLY_POST_SLUGS } from '@/config/english-content';
 import { m } from '@/paraglide/messages.js';
-import type { Locale } from '@/paraglide/runtime.js';
+import { baseLocale, type Locale } from '@/paraglide/runtime.js';
+
+import { getEnglishGuideMeta, isEnglishGuideSlug } from './english-guides';
 
 // Metadata only: the homepage can list guides without downloading their MDX.
-export const GUIDE_SLUGS = [
+const LOCALIZED_GUIDE_SLUGS = [
   'artcraft-photoshop-guide',
   'how-to-install-photocraft',
   'artcraft-for-mac',
   'photocraft-windows-guide',
 ] as const;
 
+export const GUIDE_SLUGS = [
+  ...LOCALIZED_GUIDE_SLUGS,
+  ...ENGLISH_ONLY_POST_SLUGS,
+] as const;
+
+export function getGuideSlugs(locale: Locale) {
+  return locale === baseLocale ? GUIDE_SLUGS : LOCALIZED_GUIDE_SLUGS;
+}
+
 export type GuideSlug = (typeof GUIDE_SLUGS)[number];
 
 export function getGuideMeta(slug: GuideSlug, locale: Locale) {
+  if (isEnglishGuideSlug(slug)) return getEnglishGuideMeta(slug);
   const text = {
     'artcraft-photoshop-guide': {
       title: m['guides.photoshop.title'],

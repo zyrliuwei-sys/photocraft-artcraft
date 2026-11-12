@@ -1343,5 +1343,14 @@
   "guides.mac.image_alt": "PhotoCraft text-editing workspace with a landscape painting and Character and Paragraph controls",
   "guides.windows.title": "PhotoCraft for Windows: MSI, Portable and First-Run Guide",
   "guides.windows.description": "Choose x64, ARM64 or x86, compare MSI and portable downloads, and troubleshoot your first PhotoCraft session on Windows.",
-  "guides.windows.image_alt": "PhotoCraft Layer Style dialog with a live text effect over the Earthrise photograph"
+  "guides.windows.image_alt": "PhotoCraft Layer Style dialog with a live text effect over the Earthrise photograph",
+  "pc.nav.about": "About",
+  "pc.nav.contact": "Contact",
+  "pc.stats.forks": "Forks",
+  "pc.stats.contributors": "Contributors",
+  "pc.stats.commits": "Commits",
+  "pc.stats.releases": "Releases",
+  "pc.stats.as_of": "as of {date} (UTC)",
+  "pc.stats.scope": "Contributors: GitHub repository page, checked {date}. Other figures: GitHub API; commits follow the default branch.",
+  "pc.dl.published": "Published {date} (UTC)"
 }

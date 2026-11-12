@@ -1,6 +1,7 @@
-import { createFileRoute, notFound } from '@tanstack/react-router';
+import { createFileRoute, notFound, redirect } from '@tanstack/react-router';
 
 import { envConfigs } from '@/config';
+import { isEnglishOnlyPath } from '@/config/english-content';
 import { m } from '@/paraglide/messages.js';
 import {
   baseLocale,
@@ -15,6 +16,12 @@ import { getBlogPostFn } from '@/content/posts/server';
 export const Route = createFileRoute('/blog/$slug')({
   loader: async ({ params }) => {
     const locale = getLocale();
+    if (locale !== baseLocale && isEnglishOnlyPath(`/blog/${params.slug}`)) {
+      throw redirect({
+        href: `${envConfigs.app_url}/blog/${params.slug}`,
+        statusCode: 301,
+      });
+    }
     const post = await getBlogPostFn({ data: { slug: params.slug, locale } });
     if (!post) throw notFound();
     return { locale, post };
@@ -25,6 +32,9 @@ export const Route = createFileRoute('/blog/$slug')({
     const urlFor = (path: string, lang: Locale = locale) =>
       localizeUrl(new URL(path, envConfigs.app_url), { locale: lang }).href;
     const path = `/blog/${post.slug}`;
+    const availableLocales: readonly Locale[] = isEnglishOnlyPath(path)
+      ? [baseLocale]
+      : locales;
     const canonical = urlFor(path);
     const title = `${post.title} | ${envConfigs.app_name}`;
     const image = post.image
@@ -58,7 +68,7 @@ export const Route = createFileRoute('/blog/$slug')({
       ],
       links: [
         { rel: 'canonical', href: canonical },
-        ...locales.map((lang) => ({
+        ...availableLocales.map((lang) => ({
           rel: 'alternate',
           hrefLang: lang,
           href: urlFor(path, lang),

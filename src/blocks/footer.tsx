@@ -40,6 +40,8 @@ export function Footer() {
     {
       title: m['landing.footer.legal'](),
       links: [
+        { label: m['pc.nav.about'](), href: '/about' },
+        { label: m['pc.nav.contact'](), href: '/contact' },
         { label: m['landing.footer.privacy'](), href: '/privacy-policy' },
         { label: m['landing.footer.terms'](), href: '/terms-of-service' },
       ],

@@ -3,6 +3,7 @@ import { ArrowRight, Download } from 'lucide-react';
 import { Link } from '@/core/i18n/navigation';
 import {
   PHOTOCRAFT_LINKS,
+  PHOTOCRAFT_STATS,
   PLATFORM_DOWNLOADS,
   shotSrc,
 } from '@/config/photocraft';
@@ -87,12 +88,20 @@ export function PhotoCraftHero() {
 }
 
 export function PhotoCraftFacts() {
+  const format = (value: number) =>
+    new Intl.NumberFormat('en-US').format(value);
   const facts = [
-    { value: '71k', label: m['pc.stats.stars']() },
-    { value: '58', label: m['pc.stats.tools']() },
-    { value: '27', label: m['pc.stats.blend']() },
-    { value: '500+', label: m['pc.stats.commands']() },
-    { value: '$0', label: m['pc.stats.price']() },
+    { value: format(PHOTOCRAFT_STATS.stars), label: m['pc.stats.stars']() },
+    { value: format(PHOTOCRAFT_STATS.forks), label: m['pc.stats.forks']() },
+    {
+      value: format(PHOTOCRAFT_STATS.contributors),
+      label: m['pc.stats.contributors'](),
+    },
+    { value: format(PHOTOCRAFT_STATS.commits), label: m['pc.stats.commits']() },
+    {
+      value: format(PHOTOCRAFT_STATS.releases),
+      label: m['pc.stats.releases'](),
+    },
   ];
   return (
     <section className="border-border border-y">
@@ -114,6 +123,22 @@ export function PhotoCraftFacts() {
           </div>
         ))}
       </dl>
+      <p className="text-muted-foreground mx-auto max-w-7xl px-4 pb-6 text-xs leading-relaxed sm:px-6 lg:px-8">
+        <a
+          href={PHOTOCRAFT_STATS.source}
+          className="underline underline-offset-4"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          GitHub
+        </a>{' '}
+        —{' '}
+        {m['pc.stats.as_of']({
+          date: PHOTOCRAFT_STATS.observedAt.slice(0, 10),
+        })}
+        {' · '}
+        {m['pc.stats.scope']({ date: PHOTOCRAFT_STATS.contributorsCheckedAt })}
+      </p>
     </section>
   );
 }

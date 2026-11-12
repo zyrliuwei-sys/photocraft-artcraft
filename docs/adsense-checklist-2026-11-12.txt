@@ -1,0 +1,104 @@
+photocraftartcraft.com AdSense 提交前修复清单
+验收日期：2026-11-12（Asia/Shanghai）
+状态：代码和本地验收完成；Cloudflare 构建完成；站主已选择自行部署，本次不发布。公网 /about 和 /contact 在发布前仍为 404。
+本地验收基址：http://localhost:3000。下面的对应 URL 为最终公网地址，不能把本地结果当作已上线结果。
+
+A1–A4 验收结果
+A1：本地 HTTP 200；Title 精确匹配要求；SSR 正文 410 词；四项内容均实际显示。公网：发布前 HTTP 404。
+A2：本地 HTTP 200；实际可见邮箱 support@photocraftartcraft.com 和 2 business days 回复时效。公网：发布前 HTTP 404。
+A3：首页 /、文章 /blog/artcraft-photoshop-guide、下载 /download 均本地 HTTP 200；页头和页脚均实际输出 /about、/contact 的 a href。公网：待发布后验收。
+A4：本地 /sitemap.xml HTTP 200；包含两个完整公网 URL，lastmod=2026-11-12。公网：待发布后验收。
+
+A1 About
+对应 URL：https://photocraftartcraft.com/about
+改动与验收：新增英文 SSR 页面。Title：About PhotoCraft ArtCraft — Who Runs This Site。正文 410 个英文单词，涵盖网站用途、独立开发者维护、人工整理官方文档/GitHub releases/使用检查、无隶属和背书声明。初始 HTTP HTML 即包含正文。
+文件：
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/content/pages/about.en.mdx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/routes/(pages)/about.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/routes/(pages)/-static-page.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/routes/(pages)/route.tsx
+
+A2 Contact
+对应 URL：https://photocraftartcraft.com/contact
+改动与验收：新增英文 SSR 页面。实际显示完整邮箱 support@photocraftartcraft.com，提供 mailto；站主已确认该邮箱开通可收信。实际显示 We usually reply within 2 business days。
+文件：
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/content/pages/contact.en.mdx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/routes/(pages)/contact.tsx
+
+A3 导航和页脚
+对应 URL：https://photocraftartcraft.com/；https://photocraftartcraft.com/blog/artcraft-photoshop-guide；https://photocraftartcraft.com/download
+改动与验收：共用页头和页脚加入 About / Contact 的真实 a href。静态页也接入同一页头和页脚。英文专属内容使用不带语言前缀的链接。首页、文章页、下载页均检查到两个页头链接和两个页脚链接；已实际点击下载页页脚 Contact 进入页面，移动菜单 About 也可用。
+文件：
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/blocks/header.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/blocks/footer.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/components/site-header.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/core/i18n/navigation.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/messages/en.json
+/Users/wl./Desktop/saas/代码/photocraft artcraft/messages/zh.json
+
+A4 sitemap
+对应 URL：https://photocraftartcraft.com/sitemap.xml
+改动与验收：加入 /about 和 /contact，lastmod 均为 2026-11-12；三篇新文章也进入 sitemap。新增内容只列英文 URL，不生成中文版本；原有页面的多语言条目保留。
+文件：
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/routes/sitemap[.]xml.ts
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/config/english-content.ts
+
+B1 下载版本
+对应 URL：https://photocraftartcraft.com/；https://photocraftartcraft.com/download
+改动与验收：首页和下载页显示 v0.23.0。在 Node 和 Cloudflare 构建前，通过 GitHub Releases API 同步 tag 和真实资产 URL；下载不再凭文件名拼接地址。移除 v0.23.0 不存在的 Windows x86 下载。全部 17 个 PhotoCraft 文件入口、3 个 Launcher 入口和校验和入口均核对到官方 API 资产。Mac / Windows / Linux 主下载 HEAD 均为 HTTP 302，跳转到 release-assets.githubusercontent.com。未下载、上传或托管任何安装包。Launcher 同步到官方 v0.19.2。断网测试验证保留上次数据及日期。
+文件：
+/Users/wl./Desktop/saas/代码/photocraft artcraft/scripts/sync-photocraft.mjs
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/config/photocraft-github.json
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/config/photocraft.ts
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/blocks/photocraft/download.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/package.json
+
+B2 GitHub 数据
+对应 URL：https://photocraftartcraft.com/
+改动与验收：构建时更新 stars、forks、默认分支 commits、releases；显示统计日期。当前快照：78772 stars，13923 forks，524 contributors，12393 commits，26 releases。API 采集时间 2026-11-12T02:24:22.395Z。贡献者 524 来自 GitHub 仓库页面，核验日期 2026-11-12；REST 列表的账号数口径不同，页面明确标注贡献者来源和日期，后续构建保留该单独核验日期。
+文件：
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/blocks/photocraft/hero.tsx
+
+B3 三篇英文指南
+对应 URL：https://photocraftartcraft.com/blog/photocraft-psd-round-trip-checklist
+https://photocraftartcraft.com/blog/photocraft-large-image-workflow
+https://photocraftartcraft.com/blog/photocraft-installation-troubleshooting
+改动与验收：三篇正文分别 673、701、806 个英文单词；均有一个 H1，正文分别有 5、5、6 个 H2。均在首页 Guides、/blog 列表和 sitemap 中。内容是注明证据范围的 PSD 检查流程、大图测试方案、Mac/Windows/Linux 排错指南，没有把未执行的测试写成已完成实测，没有编造耗时、内存、百分比或兼容率。没有新增中文 MDX；中文首页/Guides 不列这三篇；/zh 对应新 URL 重定向到英文原文。本地 sitemap 共有 19 个英文内容 URL，其中 7 个是指南文章。
+文件：
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/content/posts/english-guides.ts
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/content/posts/photocraft-psd-round-trip-checklist.en.mdx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/content/posts/photocraft-large-image-workflow.en.mdx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/content/posts/photocraft-installation-troubleshooting.en.mdx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/content/posts/guides.ts
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/content/posts/index.ts
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/blocks/photocraft/guides.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/blocks/blog-post.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/routes/blog/$slug.tsx
+
+C1 语言切换
+对应 URL：https://photocraftartcraft.com/
+改动与验收：页头语言切换改为真实 a href。首页目标为 /zh/，内页保留对应路径；英文专属页面切换中文时指向中文首页，避免新增中文内容页。已有页面的 hreflang 未删除。
+文件：
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/blocks/header.tsx
+/Users/wl./Desktop/saas/代码/photocraft artcraft/src/components/site-header.tsx
+
+C2 robots 参数规则
+对应 URL：https://photocraftartcraft.com/robots.txt
+改动与验收：检查了公开页面、Guides 和导航，没有依赖 ?page= 或 ?filter= 的可索引分页/筛选页。查询参数主要用于账户/API 和外部 VectorCraft 应用，保留 Disallow: /*?*。robots 文件未修改。
+文件：
+
+验证
+pnpm build：通过。
+Cloudflare 生产环境 cf:build：通过。
+pnpm exec tsc --noEmit：通过。
+Prettier 检查和 git diff --check：通过。
+security-scan --worktree：通过；人工审查本次改动未发现可利用的注入、越权或凭据泄露。
+19 个英文公开页面在 390 / 768 / 1440 像素下检查单 H1、meta、canonical、暗色主题和横向溢出；57 次检查无异常。
+未运行独立 Lighthouse 跑分；未声称测得 Core Web Vitals 或编辑器性能数据。
+
+保持的约束
+首页 Title、H1、meta description 与原版一致。
+public/ads.txt 和 src/routes/ads[.]txt.ts 未修改。
+没有新增中文页面，没有新增站内安装包或镜像文件。
+没有修改数据库 schema，没有执行数据库迁移，没有创建或修改管理员账号。
+当前代码未提交 git commit；生产发布由站主自行执行。

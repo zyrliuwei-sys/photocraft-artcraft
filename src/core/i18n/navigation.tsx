@@ -5,6 +5,7 @@ import {
   useRouter as useTanStackRouter,
 } from '@tanstack/react-router';
 
+import { isEnglishOnlyPath } from '@/config/english-content';
 import { getLocale } from '@/paraglide/runtime.js';
 
 // Locale-aware navigation. Locale prefixes are handled entirely by the
@@ -23,7 +24,7 @@ type LinkProps = Omit<ComponentProps<'a'>, 'href'> & {
 };
 
 export function Link({ href, locale, prefetch, ...rest }: LinkProps) {
-  if (/^(https?:|mailto:|tel:|#)/.test(href)) {
+  if (/^(https?:|mailto:|tel:|#)/.test(href) || isEnglishOnlyPath(href)) {
     return <a href={href} {...rest} />;
   }
   const Comp = RouterLink as any;

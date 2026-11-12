@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react';
 
+import { isEnglishOnlyPath } from '@/config/english-content';
 import { baseLocale } from '@/paraglide/runtime.js';
 
 import { GUIDE_SLUGS } from './guides';
@@ -57,6 +58,7 @@ const postModules = import.meta.glob<PostModule>('/src/content/posts/*.mdx', {
 });
 
 export function loadLocalPost(slug: string, locale: string): PostModule | null {
+  if (locale !== baseLocale && isEnglishOnlyPath(`/blog/${slug}`)) return null;
   if (!BLOG_POST_SLUGS.includes(slug)) {
     return null;
   }
