@@ -35,9 +35,7 @@ function urlFor(path: string, locale: string): string {
   }).href;
 }
 
-// One <url> per language version, each listing every alternate (Google's
-// recommended hreflang form) — so /zh pages are real <loc>s that crawlers and
-// the IndexNow sitemap submit pick up, not just alternates of the en page.
+// Only configured languages are listed; the site currently publishes English.
 function entryXml(e: Entry): string {
   const availableLocales = e.locales ?? locales;
   const alternates = [

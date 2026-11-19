@@ -53,9 +53,12 @@ export type BlogPostDetail = BlogPost & {
 
 // Eagerly bundle the local MDX posts (small markdown files), mirroring the
 // static-pages pattern. Keys are absolute from the project root.
-const postModules = import.meta.glob<PostModule>('/src/content/posts/*.mdx', {
-  eager: true,
-});
+const postModules = import.meta.glob<PostModule>(
+  '/src/content/posts/*.en.mdx',
+  {
+    eager: true,
+  }
+);
 
 export function loadLocalPost(slug: string, locale: string): PostModule | null {
   if (locale !== baseLocale && isEnglishOnlyPath(`/blog/${slug}`)) return null;

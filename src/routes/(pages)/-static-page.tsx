@@ -19,11 +19,11 @@ type PageMeta = {
 };
 
 // Eager MDX bodies render in the initial server HTML, without a Suspense shell.
-const metas = import.meta.glob<PageMeta>('/src/content/pages/*.mdx', {
+const metas = import.meta.glob<PageMeta>('/src/content/pages/*.en.mdx', {
   eager: true,
   import: 'meta',
 });
-const bodies = import.meta.glob<ComponentType>('/src/content/pages/*.mdx', {
+const bodies = import.meta.glob<ComponentType>('/src/content/pages/*.en.mdx', {
   eager: true,
   import: 'default',
 });

@@ -47,10 +47,7 @@ const HTML_CACHE_PATHS = new Set([
 const HTML_CACHE_SECONDS = 1800;
 
 function isCacheablePath(pathname: string): boolean {
-  const path = (pathname.replace(/^\/zh(?=\/|$)/, '') || '/').replace(
-    /(.)\/$/,
-    '$1'
-  );
+  const path = pathname.replace(/(.)\/$/, '$1');
   return HTML_CACHE_PATHS.has(path) || /^\/blog\/[\w-]+$/.test(path);
 }
 
@@ -91,10 +88,20 @@ async function renderWithEdgeCache(req: Request): Promise<Response> {
 // getLocale() resolves per-request (AsyncLocalStorage) during SSR.
 export default {
   async fetch(req: Request): Promise<Response> {
-    // Canonical host: www.<domain> → <domain>, keeping path and query.
+    // Canonical host and legacy Chinese URLs redirect in one hop.
     const reqUrl = new URL(req.url);
+    let needsRedirect = false;
     if (reqUrl.hostname.startsWith('www.')) {
       reqUrl.hostname = reqUrl.hostname.slice(4);
+      needsRedirect = true;
+    }
+    if (/^\/zh(?=\/|$)/.test(reqUrl.pathname)) {
+      reqUrl.pathname = reqUrl.pathname.replace(/^\/zh(?=\/|$)/, '') || '/';
+      needsRedirect = true;
+    }
+    if (needsRedirect) {
+      // Keep an absolute URL so a legacy /zh//path cannot become an
+      // off-site protocol-relative redirect. Preserve the query string.
       return Response.redirect(reqUrl.toString(), 301);
     }
     await ensureCloudflareEnv();
