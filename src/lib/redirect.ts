@@ -26,22 +26,22 @@ const AUTH_PATH_RE =
 export function safeInternalPath(
   input: string | null | undefined
 ): string | null {
-  if (!input) return null;
+  if (!input || /[\\\u0000-\u0020\u007f]/.test(input)) return null;
 
-  let path = input;
-  if (!path.startsWith('/') || path.startsWith('//')) {
-    const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    if (!origin) return null;
-    try {
-      const url = new URL(path, origin);
-      if (url.origin !== origin) return null;
-      path = url.pathname + url.search + url.hash;
-    } catch {
-      return null;
-    }
+  const browserOrigin =
+    typeof window !== 'undefined' ? window.location.origin : '';
+  if (!input.startsWith('/') && !browserOrigin) return null;
+  const origin = browserOrigin || 'https://internal.invalid';
+  try {
+    // Normalize before checking: backslashes and dot segments must not bypass
+    // the same-origin check or send the visitor back into an auth-page loop.
+    const url = new URL(input, origin);
+    if (url.origin !== origin) return null;
+    const path = url.pathname + url.search + url.hash;
+    return AUTH_PATH_RE.test(deLocalizeHref(path)) ? null : path;
+  } catch {
+    return null;
   }
-
-  return AUTH_PATH_RE.test(path) ? null : path;
 }
 
 // Schemes that execute or embed rather than hand off to an installed app.

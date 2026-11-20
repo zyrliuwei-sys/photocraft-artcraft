@@ -1,12 +1,9 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { ArrowRight, Menu, X } from 'lucide-react';
 
-import { useSession } from '@/core/auth/client';
 import { Link } from '@/core/i18n/navigation';
 import { envConfigs } from '@/config';
 import { cn } from '@/lib/utils';
-import { m } from '@/paraglide/messages.js';
-import { SiteUserMenu } from '@/components/site-user-menu';
 import { buttonVariants } from '@/components/ui/button';
 
 export interface NavLink {
@@ -23,37 +20,38 @@ export function SiteHeader({
   navLinks,
   logoAlt,
   cta,
+  account,
+  labels,
 }: {
   navLinks?: NavLink[];
   logoAlt: string;
-  /** Replaces the default "Get started" button for signed-out visitors. */
   cta?: { href: string; label: string };
+  account?: ReactNode;
+  labels: { navigation: string; openMenu: string; closeMenu: string };
 }) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { data: session } = useSession();
-  const user = session?.user;
 
   return (
     <header className="bg-background/95 border-border sticky top-0 z-50 w-full border-b backdrop-blur-sm">
-      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-18 max-w-[1536px] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5">
+        <Link href="/" className="flex min-w-0 items-center gap-2.5">
           <img
             src={envConfigs.app_logo}
             alt={logoAlt}
             width={512}
             height={512}
-            className="size-8 rounded-md"
+            className="size-8 shrink-0 rounded-md"
           />
-          <span className="font-display text-[15px] font-bold">
+          <span className="font-display truncate text-[15px] font-bold">
             {envConfigs.app_name}
           </span>
         </Link>
 
         {/* Desktop nav */}
         <nav
-          className="hidden items-center gap-4 xl:flex"
-          aria-label="Main navigation"
+          className="hidden shrink-0 items-center gap-4 min-[1440px]:flex"
+          aria-label={labels.navigation}
         >
           {navLinks?.map((link) =>
             isExternalHref(link.href) ? (
@@ -79,40 +77,45 @@ export function SiteHeader({
           )}
         </nav>
 
-        {/* Desktop actions */}
-        <div className="hidden items-center gap-3 xl:flex">
-          {user ? (
-            <SiteUserMenu
-              name={user.name || 'User'}
-              email={user.email}
-              image={user.image}
-            />
-          ) : (
+        {/* Account access stays visible on phones as well as desktop. */}
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          {account}
+          {cta && (
             <Link
-              href={cta?.href ?? '/settings'}
-              className={cn(buttonVariants(), 'gap-1.5')}
+              href={cta.href}
+              className={cn(
+                buttonVariants(),
+                'hidden min-h-10 gap-1.5 sm:inline-flex'
+              )}
             >
-              {cta?.label ?? m['common.nav.get_started']()}
+              {cta.label}
               <ArrowRight className="size-4" />
             </Link>
           )}
+          {/* Mobile toggle */}
+          <button
+            className="flex size-10 items-center justify-center min-[1440px]:hidden"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? labels.closeMenu : labels.openMenu}
+            aria-expanded={mobileOpen}
+            aria-controls="site-mobile-menu"
+          >
+            {mobileOpen ? (
+              <X className="size-5" />
+            ) : (
+              <Menu className="size-5" />
+            )}
+          </button>
         </div>
-
-        {/* Mobile toggle */}
-        <button
-          className="p-2 xl:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={mobileOpen}
-        >
-          {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-        </button>
       </div>
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="border-border border-t px-4 pt-2 pb-4 xl:hidden">
-          <nav className="flex flex-col gap-2">
+        <div
+          id="site-mobile-menu"
+          className="border-border border-t px-4 pt-2 pb-4 min-[1440px]:hidden"
+        >
+          <nav className="flex flex-col gap-2" aria-label={labels.navigation}>
             {navLinks?.map((link) =>
               isExternalHref(link.href) ? (
                 <a
@@ -138,24 +141,17 @@ export function SiteHeader({
               )
             )}
           </nav>
-          <div className="border-border mt-3 flex items-center gap-2 border-t pt-3">
-            <div className="flex-1" />
-            {user ? (
-              <SiteUserMenu
-                name={user.name || 'User'}
-                email={user.email}
-                image={user.image}
-              />
-            ) : (
+          {cta && (
+            <div className="border-border mt-3 border-t pt-3 sm:hidden">
               <Link
-                href={cta?.href ?? '/settings'}
-                className={cn(buttonVariants(), 'gap-1.5')}
+                href={cta.href}
+                className={cn(buttonVariants(), 'min-h-10 w-full gap-1.5')}
                 onClick={() => setMobileOpen(false)}
               >
-                {cta?.label ?? m['common.nav.get_started']()}
+                {cta.label}
               </Link>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </header>

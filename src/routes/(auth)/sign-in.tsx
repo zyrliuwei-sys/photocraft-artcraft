@@ -50,13 +50,19 @@ function SignInPage() {
     setCallbackUrl(params.get('callbackUrl'));
   }, []);
 
-  // Already signed in (visited /sign-in directly, or a stale callbackUrl looped
-  // back here) → go home. The auth pages never gate themselves, so this can't loop.
+  // Preserve the requested destination even when the visitor already has a session.
   useEffect(() => {
     if (sessionPending || navigatingRef.current) return;
     if (session?.user) {
       navigatingRef.current = true;
-      router.push('/');
+      const params = new URLSearchParams(window.location.search);
+      router.replace(
+        resolveAfterAuthUrl({
+          redirect: params.get('redirect'),
+          callbackUrl: params.get('callbackUrl'),
+          fallback: AFTER_AUTH_HOME,
+        })
+      );
     }
   }, [sessionPending, session?.user, router]);
 
@@ -132,7 +138,7 @@ function SignInPage() {
   });
 
   async function handleSocial(provider: 'google' | 'github') {
-    await signIn.social({ provider, callbackURL: afterLoginUrl });
+    await signIn.social({ provider, callbackURL: localizeHref(afterLoginUrl) });
   }
 
   return (

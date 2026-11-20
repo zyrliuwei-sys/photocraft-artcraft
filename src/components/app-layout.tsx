@@ -1,5 +1,3 @@
-'use client';
-
 import { useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
@@ -105,7 +103,10 @@ export function AppLayout({
     if (permissionsQuery.isPending) return;
 
     if (permissionsQuery.isError || !isAdmin) {
-      router.push(unauthorizedRedirect);
+      if (!redirectingRef.current) {
+        redirectingRef.current = true;
+        router.replace(unauthorizedRedirect);
+      }
     }
   }, [
     isPending,
